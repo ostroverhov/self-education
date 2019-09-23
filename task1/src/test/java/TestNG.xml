@@ -1,0 +1,183 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1">
+    <parameter name="email" value="vladimirpupkin75@gmail.com"/>
+    <parameter name="password" value="QWE159qwe"/>
+    <test name="testAnti-VirusWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Anti-Virus"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testInternetSecurityWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Internet Security"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testTotalSecurityWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Total Security"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecurityCloudWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Security Cloud"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSafeKidsWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Safe Kids"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testPasswordManagerWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Password Manager"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecureConnectionWindows">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Windows"/>
+                <parameter name="nameProduct" value="Secure Connection"/>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="testInternetSecurityMac">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Mac"/>
+                <parameter name="nameProduct" value="Internet Security"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecurityCloudMac">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Mac"/>
+                <parameter name="nameProduct" value="Security Cloud"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testPasswordManagerMac">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Mac"/>
+                <parameter name="nameProduct" value="Password Manager"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSafeKidsMac">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Mac"/>
+                <parameter name="nameProduct" value="Safe Kids"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecureConnectionMac">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Mac"/>
+                <parameter name="nameProduct" value="Secure Connection"/>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="testInternetSecurityAndroid">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Android"/>
+                <parameter name="nameProduct" value="Internet Security"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSafeKidsAndroid">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Android"/>
+                <parameter name="nameProduct" value="Safe Kids"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testPasswordManagerAndroid">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Android"/>
+                <parameter name="nameProduct" value="Password Manager"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecureConnectionAndroid">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Android"/>
+                <parameter name="nameProduct" value="Secure Connection"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecurityCloudAndroid">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="Android"/>
+                <parameter name="nameProduct" value="Security Cloud"/>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="testSafeKidsiOS">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="iOS"/>
+                <parameter name="nameProduct" value="Safe Kids"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testPasswordManageriOS">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="iOS"/>
+                <parameter name="nameProduct" value="Password Manager"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecureConnectioniOS">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="iOS"/>
+                <parameter name="nameProduct" value="Secure Connection"/>
+            </class>
+        </classes>
+    </test>
+    <test name="testSecurityCloudiOS">
+        <classes>
+            <class name="TestKaspersky">
+                <parameter name="nameSystem" value="iOS"/>
+                <parameter name="nameProduct" value="Security Cloud"/>
+            </class>
+        </classes>
+    </test>
+
+
+</suite>
