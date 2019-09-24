@@ -1,17 +1,16 @@
 import app.form.DownloadPanel;
 import app.models.ModelMessage;
-import app.pages.BasePage;
-import app.pages.Dashboard;
+import app.pages.DashboardPage;
 import app.pages.MainPage;
-import app.pages.MyDownloads;
-import app.projectUtils.EmailUtils;
+import app.pages.MyDownloadsPage;
+import framework.baseentity.BasePage;
+import framework.utils.EmailUtils;
 import framework.utils.MyLogger;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static app.form.NavigationPanelItem.DOWNLOADS;
-
 
 public class TestKaspersky extends BaseTest {
 
@@ -25,27 +24,27 @@ public class TestKaspersky extends BaseTest {
 
         MyLogger.step("Login");
         mainPage.getSignInForm().login(email, password);
-        Dashboard dashboard = new Dashboard();
-        assertPage(dashboard);
+        DashboardPage dashboardPage = new DashboardPage();
+        assertPage(dashboardPage);
 
         MyLogger.step("Go to page downloads");
-        dashboard.getNavigationPanel().clickButtonNavigationPanel(DOWNLOADS);
+        dashboardPage.getNavigationPanel().clickButtonNavigationPanel(DOWNLOADS);
 
-        MyDownloads myDownloads = new MyDownloads();
-        assertPage(myDownloads);
+        MyDownloadsPage myDownloadsPage = new MyDownloadsPage();
+        assertPage(myDownloadsPage);
 
         MyLogger.step("Select system");
-        myDownloads.getTabPanel().clickButtonTabPanel(nameSystem);
+        myDownloadsPage.getTabPanel().clickButtonTabPanel(nameSystem);
 
         MyLogger.step("Check send by email link with product");
-        myDownloads.getProductsCarousel().clickButtonDownloadCarousel(nameProduct);
-        DownloadPanel downloadPanel = myDownloads.getDownloadPanel();
+        myDownloadsPage.getProductsCarousel().clickButtonDownloadCarousel(nameProduct);
+        DownloadPanel downloadPanel = myDownloadsPage.getDownloadPanel();
         downloadPanel.clickButtonSendByEmail();
         Assert.assertEquals(downloadPanel.getEmailFromInputField(), email, "email not match");
         downloadPanel.inputCaptcha();
         downloadPanel.clickButtonSend();
-        EmailUtils.waitMessage(email, password);
-        ModelMessage modelMessage = EmailUtils.searchEmail(email, password);
+        EmailUtils.waitMessageFromEmail(email, password);
+        ModelMessage modelMessage = EmailUtils.getLastEmail(email, password);
         Assert.assertTrue(modelMessage.getSubject().contains(nameProduct), "name product isn't correct");
         Assert.assertTrue(modelMessage.getBody().contains(nameSystem), "name system isn't correct");
     }
@@ -53,6 +52,4 @@ public class TestKaspersky extends BaseTest {
     private void assertPage(BasePage page) {
         Assert.assertTrue(page.isPresentPage(), page.getNamePage() + " not found");
     }
-
-
 }

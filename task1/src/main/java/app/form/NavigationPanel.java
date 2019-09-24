@@ -1,16 +1,19 @@
 package app.form;
 
-import app.pages.BasePage;
+import framework.baseentity.BasePage;
 import framework.elements.Button;
 import org.openqa.selenium.By;
 
 public class NavigationPanel extends BasePage {
+
+    private static String navigationPaneLocator = "//div[@class='w-menu__item-header-text']";
+
     public NavigationPanel() {
-        super("NavigationPanel", By.xpath("//div[@class='w-menu__item-header-text']"));
+        super("NavigationPanel", By.xpath(navigationPaneLocator));
     }
 
     private Button getButtonNavigationPanel(String nameButton) {
-        return new Button(By.xpath(String.format("//div[@class='w-menu__item-header-text'][contains(text(),'%s')]", nameButton)), getFullElementName(nameButton + " button"));
+        return new Button(By.xpath(String.format("%s[contains(text(),'%s')]", navigationPaneLocator, nameButton)), getFullElementName(nameButton + " button"));
     }
 
     public void clickButtonNavigationPanel(NavigationPanelItem nameButton) {

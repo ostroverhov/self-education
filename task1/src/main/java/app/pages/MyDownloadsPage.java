@@ -3,15 +3,18 @@ package app.pages;
 import app.form.DownloadPanel;
 import app.form.ProductsCarousel;
 import app.form.TabPanel;
+import framework.baseentity.BasePage;
 import org.openqa.selenium.By;
 
-public class MyDownloads extends BasePage {
-    private TabPanel tabPanel = new TabPanel();
+public class MyDownloadsPage extends BasePage {
+
+    private static By tabPanelLocator = By.xpath("//div[@class='u-osTile__title']");
+    private TabPanel tabPanel = new TabPanel(tabPanelLocator);
     private ProductsCarousel productsCarousel = new ProductsCarousel();
     private DownloadPanel downloadPanel = new DownloadPanel();
 
-    public MyDownloads() {
-        super("MyDownloads", By.xpath("//div[@class='u-osTile__title']"));
+    public MyDownloadsPage() {
+        super("MyDownloads", tabPanelLocator);
     }
 
     public TabPanel getTabPanel() {

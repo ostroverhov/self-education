@@ -1,13 +1,13 @@
 package app.form;
 
-import app.pages.BasePage;
+import framework.baseentity.BasePage;
 import framework.elements.Button;
 import framework.elements.Input;
 import org.openqa.selenium.By;
 
 public class SignInForm extends BasePage {
-    private static By buttonSignInLocator = By.xpath("//button[contains(@class, 'u-button u-button_type_primary ')]");
 
+    private static By buttonSignInLocator = By.xpath("//button[contains(@class, 'u-button u-button_type_primary ')]");
     private Input inputEmail = new Input(By.name("EMail"), getFullElementName("input field email"));
     private Input inputPassword = new Input(By.name("Password"), getFullElementName("input field password"));
     private Button buttonSignIn = new Button(buttonSignInLocator, getFullElementName("button SignIn"));
@@ -21,5 +21,4 @@ public class SignInForm extends BasePage {
         inputPassword.entryField(password);
         buttonSignIn.clickElement();
     }
-
 }

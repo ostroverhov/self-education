@@ -1,4 +1,4 @@
-package framework.elements;
+package framework.baseentity;
 
 import framework.browser.BrowserFactory;
 import framework.utils.MyLogger;
@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.util.List;
 
 public abstract class BaseElement {
+
     private String nameElement;
     private By locator;
 
@@ -34,30 +35,30 @@ public abstract class BaseElement {
         return BrowserFactory.getInstance().findElements(locator);
     }
 
-    private static WebElement waitElementToBeClickable(WebElement element) {
+    public void waitElementToBeClickable() {
         WebDriverWait wait = new WebDriverWait(BrowserFactory.getInstance(), Integer.parseInt(Reader.getParametr("timeout")));
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
+        wait.until(ExpectedConditions.elementToBeClickable(getElement()));
     }
 
-    private static WebElement waitVisibilityElement(WebElement element) {
+    private void waitVisibilityElement() {
         Wait<WebDriver> wait = new FluentWait<>(BrowserFactory.getInstance()).withTimeout(Duration.ofSeconds(Integer.parseInt(Reader.getParametr("timeout")))).ignoring(org.openqa.selenium.NoSuchElementException.class);
-        return wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.visibilityOf(getElement()));
     }
 
-    private static Boolean waitInvsibilityElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(BrowserFactory.getInstance(), 120);
-        return wait.until(ExpectedConditions.invisibilityOf(element));
+    private boolean waitInvsibilityElement() {
+        WebDriverWait wait = new WebDriverWait(BrowserFactory.getInstance(), Integer.parseInt(Reader.getParametr("captchaTimeout")));
+        return wait.until(ExpectedConditions.invisibilityOf(getElement()));
     }
 
     public boolean isDisplayedElement() {
         MyLogger.info("element is displayed " + nameElement);
-
-        return waitVisibilityElement(getElement()).isDisplayed();
+        waitVisibilityElement();
+        return getElement().isDisplayed();
     }
 
     public boolean isInvisibleElement() {
         MyLogger.info("element is invisible " + nameElement);
-        return waitInvsibilityElement(getElement());
+        return waitInvsibilityElement();
     }
 
     public boolean isPresent() {
@@ -67,7 +68,8 @@ public abstract class BaseElement {
 
     public void clickElement() {
         MyLogger.info("click on element " + nameElement);
-        waitElementToBeClickable(getElement()).click();
+        waitElementToBeClickable();
+        getElement().click();
     }
 
     public String getTextFromElement() {

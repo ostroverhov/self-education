@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class BrowserFactory {
+
     private static WebDriver driver;
 
     private BrowserFactory() {

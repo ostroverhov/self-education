@@ -6,7 +6,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.HashMap;
 
-
 public class BrowserSettings {
 
     public static ChromeOptions chromeSettings() {

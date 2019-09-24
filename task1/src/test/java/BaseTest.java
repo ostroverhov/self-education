@@ -1,5 +1,5 @@
-import app.projectUtils.EmailUtils;
 import framework.browser.BrowserFactory;
+import framework.utils.EmailUtils;
 import framework.utils.MyLogger;
 import framework.utils.Reader;
 import org.testng.annotations.AfterTest;

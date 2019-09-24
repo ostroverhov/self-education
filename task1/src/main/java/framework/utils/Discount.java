@@ -3,6 +3,7 @@ package framework.utils;
 import java.util.List;
 
 public class Discount {
+
     public static int indexMimDiscountGame(List<Integer> elements) {
         int index = 0;
         for (int i = 0; i < elements.size(); i++) {

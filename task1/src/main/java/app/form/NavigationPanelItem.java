@@ -1,6 +1,7 @@
 package app.form;
 
 public enum NavigationPanelItem {
+
     SUMMARY("Summary"),
     DEVICES("Devices"),
     LICENSES("Licenses"),

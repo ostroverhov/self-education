@@ -1,13 +1,13 @@
 package app.form;
 
-import app.pages.BasePage;
+import framework.baseentity.BasePage;
 import framework.elements.Button;
 import org.openqa.selenium.By;
 
 public class TabPanel extends BasePage {
 
-    public TabPanel() {
-        super("TabPanel", By.xpath("//div[@class='u-osTile__title']"));
+    public TabPanel(By locator) {
+        super("TabPanel", locator);
     }
 
     private Button getButtonTabPanel(String nameButton) {

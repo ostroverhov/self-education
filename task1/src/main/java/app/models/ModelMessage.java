@@ -1,6 +1,7 @@
 package app.models;
 
 public class ModelMessage {
+
     private String subject;
     private String body;
 

@@ -1,12 +1,14 @@
 package app.pages;
 
 import app.form.NavigationPanel;
+import framework.baseentity.BasePage;
 import org.openqa.selenium.By;
 
-public class Dashboard extends BasePage {
+public class DashboardPage extends BasePage {
+
     private NavigationPanel navigationPanel = new NavigationPanel();
 
-    public Dashboard() {
+    public DashboardPage() {
         super("DashBoard", By.xpath("//ul[@class='menu-utility']"));
     }
 

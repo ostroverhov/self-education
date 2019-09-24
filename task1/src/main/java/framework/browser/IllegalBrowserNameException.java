@@ -1,8 +1,10 @@
 package framework.browser;
 
-public class IllegalBrowserNameException extends IllegalArgumentException {
+import framework.utils.MyLogger;
 
-    public IllegalBrowserNameException() {
-        System.out.println("Select browser chrome / firefox");
+class IllegalBrowserNameException extends IllegalArgumentException {
+
+    IllegalBrowserNameException() {
+        MyLogger.warn("Select browser chrome / firefox");
     }
 }

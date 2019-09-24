@@ -1,14 +1,14 @@
 package app.form;
 
-import app.pages.BasePage;
+import framework.baseentity.BasePage;
 import framework.elements.Button;
 import framework.elements.Input;
 import framework.elements.Panel;
 import org.openqa.selenium.By;
 
 public class DownloadPanel extends BasePage {
-    private static By inputEmailFieldLocator = By.id("Email");
 
+    private static By inputEmailFieldLocator = By.id("Email");
     private Button buttonSendByEmail = new Button(By.xpath("//span[@class='u-button__text']/ancestor::button"), getFullElementName("buttonSendByEmail"));
     private Input inputEmailField = new Input(inputEmailFieldLocator, getFullElementName("inputEmailField"));
     private Button buttonSend = new Button(By.xpath("//span[@class='u-button__spinner']/ancestor::button"), getFullElementName("buttonSend"));
