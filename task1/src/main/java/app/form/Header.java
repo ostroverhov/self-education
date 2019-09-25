@@ -6,8 +6,7 @@ import org.openqa.selenium.By;
 
 public class Header extends BasePage {
 
-    private static By buttonSignInLocator = By.xpath("//div[@class='signin-invite']//button");
-    private Button buttonSignIn = new Button(buttonSignInLocator, getFullElementName("button Sign In"));
+    private Button buttonSignIn = new Button(By.xpath("//div[@class='signin-invite']//button"), getFullElementName("button Sign In"));
 
     public Header(By locator) {
         super("Header", locator);
