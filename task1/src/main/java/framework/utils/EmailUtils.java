@@ -17,10 +17,9 @@ public class EmailUtils {
     public static ModelMessage getLastEmail(String userName, String password) {
         ModelMessage modelMessage = null;
         try {
-            Message[] messages = getMassages(userName, password);
-            for (Message msg : messages) {
-                modelMessage = new ModelMessage(msg.getSubject(), getText(msg));
-            }
+            Message[] messages = getMessages(userName, password);
+            Message msg = messages[messages.length - 1];
+            modelMessage = new ModelMessage(msg.getSubject(), getText(msg));
             closeFolderStore();
         } catch (IOException | MessagingException e) {
             e.printStackTrace();
@@ -29,7 +28,7 @@ public class EmailUtils {
     }
 
     private static boolean isPresentEmail(String userName, String password) {
-        return getMassages(userName, password).length > 0;
+        return getMessages(userName, password).length > 0;
     }
 
     public static void waitMessageFromEmail(String userName, String password) {
@@ -39,7 +38,7 @@ public class EmailUtils {
 
     public static void deleteEmail(String userName, String password) {
         try {
-            Message[] messages = getMassages(userName, password);
+            Message[] messages = getMessages(userName, password);
             Flags deleted = new Flags(Flags.Flag.DELETED);
             folder.setFlags(messages, deleted, true);
             closeFolderStore();
@@ -72,7 +71,7 @@ public class EmailUtils {
         });
     }
 
-    private static Message[] getMassages(String userName, String password) {
+    private static Message[] getMessages(String userName, String password) {
         Message[] messages = null;
         try {
             store = getSession(userName, password).getStore("imaps");

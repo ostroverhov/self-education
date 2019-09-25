@@ -15,7 +15,6 @@ public abstract class BasePage {
 
     public boolean isPresentPage() {
         Panel panel = new Panel(locator, namePage);
-        panel.waitElementToBeClickable();
         return panel.isDisplayedElement();
     }
 
