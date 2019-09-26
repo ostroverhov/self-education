@@ -45,16 +45,16 @@ public abstract class BaseElement {
         wait.until(ExpectedConditions.visibilityOf(getElement()));
     }
 
+    public boolean waitInvsibilityElement() {
+        MyLogger.info("element is invisible " + nameElement);
+        WebDriverWait wait = new WebDriverWait(BrowserFactory.getInstance(), Integer.parseInt(Reader.getParametr("captchaTimeout")));
+        return wait.until(ExpectedConditions.invisibilityOf(getElement()));
+    }
+
     public boolean isDisplayedElement() {
         MyLogger.info("element is displayed " + nameElement);
         waitVisibilityElement();
         return getElement().isDisplayed();
-    }
-
-    public boolean isInvisibleElement() {
-        MyLogger.info("element is invisible " + nameElement);
-        WebDriverWait wait = new WebDriverWait(BrowserFactory.getInstance(), Integer.parseInt(Reader.getParametr("captchaTimeout")));
-        return wait.until(ExpectedConditions.invisibilityOf(getElement()));
     }
 
     public boolean isPresent() {
