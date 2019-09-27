@@ -14,8 +14,7 @@ public abstract class BasePage {
     }
 
     public boolean isPresentPage() {
-        Panel panel = new Panel(locator, namePage);
-        return panel.isDisplayedElement();
+        return new Panel(locator, namePage).isDisplayedElement();
     }
 
     public String getNamePage() {

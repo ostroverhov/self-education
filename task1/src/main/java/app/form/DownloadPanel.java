@@ -33,7 +33,7 @@ public class DownloadPanel extends BasePage {
     public void inputCaptcha() {
         if (captchaPanel.isPresent()) {
             if (captchaPanel.isDisplayedElement()) {
-                while (captchaPanel.isInvisibleElement()) {
+                while (captchaPanel.waitInvsibilityElement()) {
                     break;
                 }
             }

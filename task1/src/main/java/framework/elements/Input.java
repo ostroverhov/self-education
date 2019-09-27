@@ -10,6 +10,7 @@ public class Input extends BaseElement {
     }
 
     public void entryField(String text) {
+        waitElementToBeClickable();
         getElement().sendKeys(text);
     }
 }
