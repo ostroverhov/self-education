@@ -7,10 +7,9 @@ import project.steps.BattleShipSteps;
 public class TestBattleship extends BaseTest {
 
     @Override
-    @Test(description = "TestNG project demo test")
+    @Test
     public void runTest() {
-        BattleShipSteps battleShipSteps = new BattleShipSteps();
-        battleShipSteps.preparationToStart();
-        battleShipSteps.playingGame();
+        BattleShipSteps.preparationToStart();
+        BattleShipSteps.playingGame();
     }
 }
