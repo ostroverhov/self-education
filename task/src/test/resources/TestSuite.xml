@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite roomstyler.com" verbose="1">
+    <test name="Test roomstyler dining room">
+        <classes>
+            <class name="project.tests.DiningRoomTest">
+                <methods>
+                    <parameter name="pathToImage" value="/img/furniture/tableBrown.png"/>
+                    <parameter name="pathToImageOnWorkplace" value="/img/furnitureworkplace/tableBrownOnWorkPlace.png"/>
+                    <parameter name="name" value="Sawyer Dining Table"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
