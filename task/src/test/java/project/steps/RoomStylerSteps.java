@@ -13,7 +13,7 @@ import project.utils.RegexpHandler;
 
 public class RoomStylerSteps {
 
-    private static final String pathToImgCloseElement = "img/closeElement.png"; //todo где оставить
+    private static final String pathToImgCloseElement = "img/closeElement.png";
     private static final String pathToWorkPlace = "img/workPlace.png";
     private static final String pathToEmptyWorkPlace = "img/emptyWorkPlace.png";
 

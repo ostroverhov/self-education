@@ -20,5 +20,6 @@ public class MainPage extends Form {
     }
 
     private WelcomeWindow welcomeWindow = new WelcomeWindow();
+
     private SideBar sideBar = new SideBar();
 }
