@@ -18,11 +18,11 @@ public class MainPage extends Form {
     private final IButton btnRandomOpponent = getElementFactory().getButton(By.xpath("//a[@class='battlefield-start-choose_rival-variant-link']"), "Random opponent");
     private final IButton btnRandomPlaceShip = getElementFactory().getButton(By.xpath("//ul[@class='placeships']//span"), "Random place ship");
     private final IButton btnStartGame = getElementFactory().getButton(By.xpath("//div[@class='battlefield-start-button']"), "Button start game");
-    private final ILabel labelGame = getElementFactory().getLabel(By.xpath("//div[contains(@class, 'notification__rival-leave') " +
-            "or contains(@class,'notification__game-over-win') " +
-            "or contains(@class,'notification__game-over-lose') " +
-            "or contains(@class,'notification__server-error') " +
-            "or contains(@class,'notification__game-error')]"), "Label notification");
+    private final ILabel labelGame = getElementFactory().getLabel(By.xpath(new StringBuilder().append("//div[contains(@class, 'rival-leave') ")
+            .append("or contains(@class,'game-over-win') ")
+            .append("or contains(@class,'game-over-lose') ")
+            .append("or contains(@class,'server-error') ")
+            .append("or contains(@class,'game-error')]").toString()), "Label notification");
     private static final String emptyCellAttribute = "battlefield-cell__empty";
     private static final String hitCellAttribute = "battlefield-cell__hit";
     private static final String attributeField = "class";

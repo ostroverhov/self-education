@@ -12,56 +12,52 @@ public class BattleShipSteps {
 
     private static final int rangeForRandomPlaceShips = 15;
 
-    private static MainPage getMainPage() {
-        return new MainPage();
+    public static void preparationToStart(MainPage mainPage) {
+        mainPage.clickRandomOpponent();
+        mainPage.clickRandomPlaceShipRandomTimes(rangeForRandomPlaceShips);
+        mainPage.clickStartGame();
     }
 
-    public static void preparationToStart() {
-        getMainPage().clickRandomOpponent();
-        getMainPage().clickRandomPlaceShipRandomTimes(rangeForRandomPlaceShips);
-        getMainPage().clickStartGame();
-    }
-
-    public static void playingGame() {
+    public static void playingGame(MainPage mainPage) {
         LinkedHashSet<Field> fields = new TemplatesGame().generateCombinationFieldsTemplate();
         for (Field f : fields) {
-            if (getMainPage().isInvisibleLabel()) {
-                getMainPage().clickField(f);
-                if (getMainPage().isInjureShip(f)) {
-                    ArrayList<Field> nextInjuredFields = killShipFirstStage(f);
+            if (mainPage.isInvisibleLabel()) {
+                mainPage.clickField(f);
+                if (mainPage.isInjureShip(f)) {
+                    ArrayList<Field> nextInjuredFields = killShipFirstStage(f, mainPage);
                     if (!nextInjuredFields.isEmpty()) {
-                        ArrayList<Field> finallyInjuredFields = killShipNextStage(nextInjuredFields);
+                        ArrayList<Field> finallyInjuredFields = killShipNextStage(nextInjuredFields, mainPage);
                         if (!finallyInjuredFields.isEmpty()) {
-                            killShipNextStage(finallyInjuredFields);
+                            killShipNextStage(finallyInjuredFields, mainPage);
                         }
                     }
                 }
-            } else getResultGame();
+            } else getResultGame(mainPage);
         }
     }
 
-    private static ArrayList<Field> killShipFirstStage(Field injureField) {
+    private static ArrayList<Field> killShipFirstStage(Field injureField, MainPage mainPage) {
         ArrayList<Field> nextInjuredFields = new ArrayList<>();
         LinkedHashSet<Field> templateInjuredFields = new TemplatesGame().killShipTemplate(injureField);
         for (Field injuredField : templateInjuredFields) {
-            getMainPage().clickField(injuredField);
-            if (getMainPage().isInjureShip(injuredField)) {
+            mainPage.clickField(injuredField);
+            if (mainPage.isInjureShip(injuredField)) {
                 nextInjuredFields.add(injuredField);
             }
         }
         return nextInjuredFields;
     }
 
-    private static ArrayList<Field> killShipNextStage(ArrayList<Field> injuredFields) {
+    private static ArrayList<Field> killShipNextStage(ArrayList<Field> injuredFields, MainPage mainPage) {
         ArrayList<Field> nextInjuredFields = new ArrayList<>();
         for (Field injuredField : injuredFields) {
-            nextInjuredFields.addAll(killShipFirstStage(injuredField));
+            nextInjuredFields.addAll(killShipFirstStage(injuredField, mainPage));
         }
         return nextInjuredFields;
     }
 
-    private static void getResultGame() {
-        Assert.assertTrue(getMainPage().getAttributeFromLabelGame().contains("game-over-win"), getMainPage().getTextFromLabelGame());
+    private static void getResultGame(MainPage mainPage) {
+        Assert.assertTrue(mainPage.getAttributeFromLabelGame().contains("game-over-win"), mainPage.getTextFromLabelGame());
     }
 }
 
