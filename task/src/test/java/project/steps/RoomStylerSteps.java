@@ -59,9 +59,9 @@ public class RoomStylerSteps {
 
     public void checkParametersFurniture(Furniture furniture) {
         ParametersFurniture parametersFurniture = RegexpHandler.getParametersFurniture(getSideBar().getSideBarProperties().getSizeFurniture());
-        assertPrametrs(parametersFurniture.getHeight(), "height");
-        assertPrametrs(parametersFurniture.getLength(), "length");
-        assertPrametrs(parametersFurniture.getWidth(), "width");
+        assertParametrs(parametersFurniture.getHeight(), "height");
+        assertParametrs(parametersFurniture.getLength(), "length");
+        assertParametrs(parametersFurniture.getWidth(), "width");
         Assert.assertEquals(getSideBar().getSideBarProperties().getNameFurniture(), furniture.getNameFurniture(), "Name furniture not equals");
     }
 
@@ -84,7 +84,7 @@ public class RoomStylerSteps {
         return new MainPage().getWelcomeWindow();
     }
 
-    private void assertPrametrs(String parametr, String nameParameter) {
+    private void assertParametrs(String parametr, String nameParameter) {
         Assert.assertNotEquals(0, Integer.valueOf(parametr), nameParameter + " not equals 0");
     }
 }
