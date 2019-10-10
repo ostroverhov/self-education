@@ -3,6 +3,7 @@ package project.tests;
 import framework.base.BaseTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import project.forms.MainPage;
 import project.models.Furniture;
 import project.steps.RoomStylerSteps;
 
@@ -15,20 +16,20 @@ public class DiningRoomTest extends BaseTest {
     @Test(description = "Test roomstyler")
     @Parameters(value = {"pathToImage", "pathToImageOnWorkplace", "name"})
     public void runTest(String pathToImage, String pathToImageOnWorkplace, String name) {
-        RoomStylerSteps roomStylerSteps = new RoomStylerSteps();
-        roomStylerSteps.mainPageIsOpened();
-        roomStylerSteps.closeWelcomeWindow();
-        roomStylerSteps.welcomeWindowIsClose();
-        roomStylerSteps.selectSideBarItem(FURNISH);
-        roomStylerSteps.sideBarIsOpened();
-        roomStylerSteps.selectSideSearchItem(DININGROOM);
-        roomStylerSteps.sideSearchIsOpened();
+        MainPage mainPage = new MainPage();
+        RoomStylerSteps.mainPageIsOpened(mainPage);
+        RoomStylerSteps.closeWelcomeWindow(mainPage);
+        RoomStylerSteps.welcomeWindowIsClose(mainPage);
+        RoomStylerSteps.selectSideBarItem(FURNISH, mainPage);
+        RoomStylerSteps.sideBarIsOpened(mainPage);
+        RoomStylerSteps.selectSideSearchItem(DININGROOM, mainPage);
+        RoomStylerSteps.sideSearchIsOpened(mainPage);
         Furniture furniture = new Furniture(pathToImage, pathToImageOnWorkplace, name);
-        roomStylerSteps.dragAndDrop(furniture);
-        roomStylerSteps.isPresentOnWorkPlace(furniture);
-        roomStylerSteps.clickFurniture(furniture);
-        roomStylerSteps.checkParametersFurniture(furniture);
-        roomStylerSteps.deleteFurniture();
-        roomStylerSteps.checkDeleteFurniture();
+        RoomStylerSteps.dragFurnitureToWorkPlace(furniture, mainPage);
+        RoomStylerSteps.isPresentFurnitureOnWorkPlace(furniture, mainPage);
+        RoomStylerSteps.clickFurnitureOnWorkPlace(furniture, mainPage);
+        RoomStylerSteps.checkParametersFurniture(furniture, mainPage);
+        RoomStylerSteps.deleteFurniture(mainPage);
+        RoomStylerSteps.checkDeleteFurniture(mainPage);
     }
 }

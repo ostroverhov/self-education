@@ -2,31 +2,31 @@ package project.models;
 
 public class ParametersFurniture {
 
-    private String Height;
-    private String Width;
-    private String Length;
+    private String height;
+    private String width;
+    private String length;
 
     public void setHeight(String height) {
-        Height = height;
+        this.height = height;
     }
 
     public void setWidth(String width) {
-        Width = width;
+        this.width = width;
     }
 
     public void setLength(String length) {
-        Length = length;
+        this.length = length;
     }
 
     public String getHeight() {
-        return Height;
+        return height;
     }
 
     public String getWidth() {
-        return Width;
+        return width;
     }
 
     public String getLength() {
-        return Length;
+        return length;
     }
 }

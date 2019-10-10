@@ -6,17 +6,15 @@ import org.openqa.selenium.By;
 
 public class WelcomeWindow extends Form {
 
+    private static By btnCloseLocator = By.xpath("//a[@class='popin-close-title']");
+
     public WelcomeWindow() {
-        super(By.xpath("//a[@class='popin-close-title']"), "Welcome window");
+        super(btnCloseLocator, "Welcome window");
     }
 
-    private final IButton btnClose = getElementFactory().getButton(By.xpath("//a[@class='popin-close-title']"), "Close welcome window");
+    private final IButton btnClose = getElementFactory().getButton(btnCloseLocator, "Close welcome window");
 
     public void clickCloseWindow() {
         btnClose.click();
-    }
-
-    public boolean isInvisibleBtnClose() {
-        return !btnClose.state().isDisplayed();
     }
 }
