@@ -79,7 +79,7 @@ public class RoomStylerSteps {
     }
 
     private static void assertParameters(String parameter, String nameParameter) {
-        Assert.assertNotEquals(0, Integer.valueOf(parameter), nameParameter + " not equals 0");
+        Assert.assertNotEquals(0, Double.valueOf(parameter), nameParameter + " not equals 0");
     }
 
     private static void assertIsOpen(Form form, String nameForm) {

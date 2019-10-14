@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static aquality.selenium.elements.ElementType.LABEL;
-import static framework.utils.RegexpHandler.getParameter;
+import static framework.utils.RegexpHandler.getParameterSize;
 
 public class SideBarProperties extends Form {
 
-    private static final String patternHeight = "H[\\d]{1}\\.[\\d]{2}";
-    private static final String patternWidth = "W[\\d]{1}\\.[\\d]{2}";
-    private static final String patternLength = "D[\\d]{1}\\.[\\d]{2}";
+    private static final String patternHeight = "H([\\d]{1}\\.[\\d]{2})";
+    private static final String patternWidth = "W([\\d]{1}\\.[\\d]{2})";
+    private static final String patternLength = "D([\\d]{1}\\.[\\d]{2})";
 
     public SideBarProperties() {
         super(By.id("view-component-info"), "Side bar properties");
@@ -24,13 +24,13 @@ public class SideBarProperties extends Form {
 
     public ParametersFurniture getParametersFurniture() {
         ParametersFurniture parametersFurniture = new ParametersFurniture();
-        parametersFurniture.setHeight(getParameter(patternHeight, labelSizeFurniture.getText()).replaceAll("\\D+", ""));
-        parametersFurniture.setWidth(getParameter(patternWidth, labelSizeFurniture.getText()).replaceAll("\\D+", ""));
-        parametersFurniture.setLength(getParameter(patternLength, labelSizeFurniture.getText()).replaceAll("\\D+", ""));
+        parametersFurniture.setHeight(getParameterSize(patternHeight, labelSizeFurniture.getText()));
+        parametersFurniture.setWidth(getParameterSize(patternWidth, labelSizeFurniture.getText()));
+        parametersFurniture.setLength(getParameterSize(patternLength, labelSizeFurniture.getText()));
         return parametersFurniture;
     }
 
-    private By labelSceneInformationLocator = By.xpath("//div[@class='scene']//li//b");
+    private final By labelSceneInformationLocator = By.xpath("//div[@class='scene']//li//b");
     private final ILabel labelNameFurniture = getElementFactory().getLabel(By.xpath("//p[@class='name']"), "Name furniture");
     private final ILabel labelSizeFurniture = getElementFactory().getLabel(By.xpath("//p[@class='dimensions']"), "Size Furniture");
 

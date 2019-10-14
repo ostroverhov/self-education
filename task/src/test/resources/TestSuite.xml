@@ -7,7 +7,7 @@
                 <methods>
                     <parameter name="pathToImage" value="/img/furniture/tableBrown.png"/>
                     <parameter name="pathToImageOnWorkplace" value="/img/furnitureworkplace/tableBrownOnWorkPlace.png"/>
-                    <parameter name="name" value="Sawyer Dining Table"/>
+                    <parameter name="name" value="Regan Dining Table"/>
                 </methods>
             </class>
         </classes>
