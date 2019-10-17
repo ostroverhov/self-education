@@ -1,0 +1,2 @@
+SELECT project.name AS 'PROJECT', test.name AS 'TEST', MIN(test.end_time-test.start_time) AS 'MIN_WORKING_TIME' FROM test
+INNER JOIN project ON test.project_id=project.id GROUP BY project.name, test.name ORDER BY project.name, test.name
