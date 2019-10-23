@@ -1,9 +1,10 @@
 package project.steps;
 
-import framework.utils.ApiUtils;
+import framework.utils.JsonPlaceholderApi;
 import framework.utils.JsonUtils;
-import framework.utils.RandomUtils;
+import framework.utils.ReaderUtils;
 import org.testng.Assert;
+import project.datastorage.PostGenertor;
 import project.models.Post;
 import project.models.ResponseFromApi;
 import project.models.User;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 
 public class StepsApi {
 
-    private static final String requestForPosts = "https://jsonplaceholder.typicode.com/posts";
-    private static final String requestForUsers = "https://jsonplaceholder.typicode.com/users";
+    private static final String pathToTestUser = "src/test/resources/testUser.json";
+    private static final String urlRequest = ReaderUtils.getUrl();
+    private static final String requestForPosts = "posts";
+    private static final String requestForUsers = "users";
+    private static final int lengthRandomString = 10;
     private static final String postIdForSend = "101";
     private static final String userIdForSend = "1";
     private static final int numberTestPost = 99;
@@ -24,62 +28,57 @@ public class StepsApi {
     private static final int created = 201;
     private static final int notFound = 404;
 
-    public static void getAllPosts() {
-        ResponseFromApi responseFromApi = ApiUtils.getRequest(requestForPosts);
-        assertStatusCode(responseFromApi.getStatusCode(), ok);
+    public static void getAllPosts() throws Throwable {
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts);
+        assertStatusCode(responseFromApi, ok);
         assertOrderArrayPosts(JsonUtils.jsonToPostArray(responseFromApi.getBody()));
     }
 
-    public static void getPostByNumber() {
-        ResponseFromApi responseFromApi = ApiUtils.getRequest(requestForPosts + "/" + numberTestPost);
-        assertStatusCode(responseFromApi.getStatusCode(), ok);
+    public static void getPostByNumber() throws Throwable {
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts, numberTestPost);
+        assertStatusCode(responseFromApi, ok);
         assertPostByNumber(JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class), String.valueOf(numberTestPost), numberUserTestPost);
     }
 
-    public static void getPostNotExist() {
-        ResponseFromApi responseFromApi = ApiUtils.getRequest(requestForPosts + "/" + numberTestPostNonExist);
-        assertStatusCode(responseFromApi.getStatusCode(), notFound);
+    public static void getPostNotExist() throws Throwable {
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts, numberTestPostNonExist);
+        assertStatusCode(responseFromApi, notFound);
         assertPostIsEmpty(JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class));
     }
 
-    public static void setPost() {
-        Post postForSend = createPostForSend(postIdForSend, userIdForSend);
-        ResponseFromApi responseFromApi = ApiUtils.sendPost(requestForPosts, JsonUtils.convertToJson(postForSend));
-        assertStatusCode(responseFromApi.getStatusCode(), created);
+    public static void setPost() throws Throwable {
+        Post postForSend = PostGenertor.createPostForSend(postIdForSend, userIdForSend, lengthRandomString);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeSendRequest(JsonUtils.convertToJson(postForSend), urlRequest, requestForPosts);
+        assertStatusCode(responseFromApi, created);
         assertSendPost(postForSend, JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class));
     }
 
-    public static User getAllUsers() {
-        ResponseFromApi responseFromApi = ApiUtils.getRequest(requestForUsers);
-        assertStatusCode(responseFromApi.getStatusCode(), ok);
-        User testUser = JsonUtils.jsonToUsersArray(responseFromApi.getBody()).get(numberTestUser - 1);
-        Assert.assertEquals(JsonUtils.readUserFromJson(), testUser, "Users not equals");
+    public static User getAllUsers() throws Throwable {
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForUsers);
+        assertStatusCode(responseFromApi, ok);
+        User testUser = (User) JsonUtils.jsonToUsersArray(responseFromApi.getBody()).get(numberTestUser - 1);
+        Assert.assertEquals(JsonUtils.readObjectFromJson(User.class, pathToTestUser), testUser, "Users not equals");
         return testUser;
     }
 
-    public static void getUserByNumber(User testUser) {
-        ResponseFromApi responseFromApi = ApiUtils.getRequest(requestForUsers + "/" + numberTestUser);
-        assertStatusCode(responseFromApi.getStatusCode(), ok);
+    public static void getUserByNumber(User testUser) throws Throwable {
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForUsers, numberTestUser);
+        assertStatusCode(responseFromApi, ok);
         Assert.assertEquals(JsonUtils.jsonToObject(responseFromApi.getBody(), User.class), testUser, "Users not equals");
     }
 
-    private static void assertStatusCode(int statusCodeFromResponse, int statusCode) {
-        Assert.assertEquals(statusCodeFromResponse, statusCode, "Status code not match");
+    private static void assertStatusCode(ResponseFromApi responseFromApi, int statusCode) {
+        Assert.assertEquals(responseFromApi.getStatusCode(), statusCode, "Status code not match");
     }
 
     private static void assertOrderArrayPosts(ArrayList<Post> posts) {
-        for (int i = 0; i < posts.size(); i++) {
-            Assert.assertEquals(String.valueOf(i + 1), posts.get(i).getId(), "Post number " + posts.get(i).getId() + " not match");
+        for (int i = 0; i < posts.size() - 1; i++) {
+            Assert.assertTrue(getIdPostFromArray(posts, i + 1) > getIdPostFromArray(posts, i), "Post number " + getIdPostFromArray(posts, i) + " not match");
         }
     }
 
-    private static Post createPostForSend(String postId, String userId) {
-        Post post = new Post();
-        post.setId(postId);
-        post.setUserId(userId);
-        post.setTitle(RandomUtils.generateRandomString());
-        post.setBody(RandomUtils.generateRandomString());
-        return post;
+    private static int getIdPostFromArray(ArrayList<Post> posts, int numberPost) {
+        return Integer.parseInt(posts.get(numberPost).getId());
     }
 
     private static void assertPostByNumber(Post post, String postId, String userId) {

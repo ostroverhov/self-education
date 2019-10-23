@@ -18,7 +18,7 @@ public abstract class BaseTest {
     /**
      * To override.
      */
-    protected abstract void runTest();
+    protected abstract void runTest() throws Throwable;
 
     /**
      * Before Class method

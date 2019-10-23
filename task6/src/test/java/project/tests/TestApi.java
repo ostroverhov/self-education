@@ -9,7 +9,7 @@ public class TestApi extends BaseTest {
 
     @Override
     @Test()
-    public void runTest() {
+    public void runTest() throws Throwable {
         StepsApi.getAllPosts();
         StepsApi.getPostByNumber();
         StepsApi.getPostNotExist();

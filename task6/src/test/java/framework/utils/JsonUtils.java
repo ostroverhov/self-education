@@ -1,5 +1,6 @@
 package framework.utils;
 
+import aquality.selenium.logger.Logger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import project.models.Post;
@@ -13,35 +14,38 @@ import java.util.List;
 
 public class JsonUtils {
 
-    private static final String pathToTestUser = "src/test/resources/testUser.json";
+    private static final Logger logger = Logger.getInstance();
 
-    public static User readUserFromJson() {
-        User user = null;
+    public static <T> T readObjectFromJson(Class<T> tClass, String pathToJson) throws Throwable {
+        logger.info("Read object from json " + tClass);
+        T object;
         try {
-            user = new Gson().fromJson(new FileReader(pathToTestUser), User.class);
+            object = new Gson().fromJson(new FileReader(pathToJson), tClass);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException("File json not found");
         }
-        return user;
+        return object;
     }
 
     public static String convertToJson(Object object) {
+        logger.info("Convert object to json" + object.getClass());
         return new Gson().toJson(object, object.getClass());
     }
 
-    public static ArrayList<Post> jsonToPostArray(String bodyResponse) {
+    public static <T> ArrayList<T> jsonToPostArray(String bodyResponse) {
         Type itemsListType = new TypeToken<List<Post>>() {
         }.getType();
         return new Gson().fromJson(bodyResponse, itemsListType);
     }
 
-    public static ArrayList<User> jsonToUsersArray(String bodyResponse) {
+    public static <T> ArrayList<T> jsonToUsersArray(String bodyResponse) {
         Type itemsListType = new TypeToken<List<User>>() {
         }.getType();
         return new Gson().fromJson(bodyResponse, itemsListType);
     }
 
-    public static <T> T jsonToObject(String bodyResponse, Class<T> clazz) {
-        return new Gson().fromJson(bodyResponse, clazz);
+    public static <T> T jsonToObject(String bodyResponse, Class<T> tClass) {
+        logger.info("Get object from json response");
+        return new Gson().fromJson(bodyResponse, tClass);
     }
 }
