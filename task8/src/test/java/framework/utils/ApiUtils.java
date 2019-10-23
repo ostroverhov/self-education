@@ -17,6 +17,7 @@ public class ApiUtils {
     public static ResponseFromApi sendGetRequestXML(String stringRequest) throws Throwable {
         logger.info("Send get request " + stringRequest);
         HttpGet request = new HttpGet(stringRequest);
+        logger.info("Create response and set parameters");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(request)) {
             responseFromApi.setStatusCode(RegexpHandler.getNumbers(patternStatusCode, response.getStatusLine().toString()));

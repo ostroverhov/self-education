@@ -1,6 +1,5 @@
 package project.steps;
 
-import framework.utils.ReaderUtils;
 import framework.utils.RegexpHandler;
 import framework.utils.XmlPlaceholderApi;
 import framework.utils.XmlUtils;
@@ -12,12 +11,11 @@ import project.projectutils.SelectionUtils;
 
 public class StepsApi {
 
-    private static final String request = ReaderUtils.getUrl();
     private static final String patternGetIdBook = "bk([\\d]{3})";
     private static final int ok = 200;
 
     public static Catalog getAllBook() throws Throwable {
-        ResponseFromApi responseFromApi = XmlPlaceholderApi.executeGetRequest(request);
+        ResponseFromApi responseFromApi = XmlPlaceholderApi.executeGetRequest();
         assertStatusCode(responseFromApi, ok);
         Catalog catalog = XmlUtils.getCatalog(responseFromApi.getBody());
         assertOrderArrayBooks(catalog);
