@@ -17,10 +17,9 @@ public class JsonPlaceholderApi {
         return ApiUtils.sendPost(createStringRequest(args), jsonString);
     }
 
-
     private static String createStringRequest(Object... args) {
         logger.info("Create string request");
-        StringBuilder request = new StringBuilder();
+        StringBuilder request = new StringBuilder(ReaderUtils.getUrl());
         for (Object argument : args) {
             request.append(argument).append("/");
         }

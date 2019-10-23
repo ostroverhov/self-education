@@ -2,7 +2,6 @@ package project.steps;
 
 import framework.utils.JsonPlaceholderApi;
 import framework.utils.JsonUtils;
-import framework.utils.ReaderUtils;
 import org.testng.Assert;
 import project.datastorage.PostGenertor;
 import project.models.Post;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 public class StepsApi {
 
     private static final String pathToTestUser = "src/test/resources/testUser.json";
-    private static final String urlRequest = ReaderUtils.getUrl();
     private static final String requestForPosts = "posts";
     private static final String requestForUsers = "users";
     private static final int lengthRandomString = 10;
@@ -29,32 +27,32 @@ public class StepsApi {
     private static final int notFound = 404;
 
     public static void getAllPosts() throws Throwable {
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(requestForPosts);
         assertStatusCode(responseFromApi, ok);
         assertOrderArrayPosts(JsonUtils.jsonToPostArray(responseFromApi.getBody()));
     }
 
     public static void getPostByNumber() throws Throwable {
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts, numberTestPost);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(requestForPosts, numberTestPost);
         assertStatusCode(responseFromApi, ok);
         assertPostByNumber(JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class), String.valueOf(numberTestPost), numberUserTestPost);
     }
 
     public static void getPostNotExist() throws Throwable {
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForPosts, numberTestPostNonExist);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(requestForPosts, numberTestPostNonExist);
         assertStatusCode(responseFromApi, notFound);
         assertPostIsEmpty(JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class));
     }
 
     public static void setPost() throws Throwable {
         Post postForSend = PostGenertor.createPostForSend(postIdForSend, userIdForSend, lengthRandomString);
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeSendRequest(JsonUtils.convertToJson(postForSend), urlRequest, requestForPosts);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeSendRequest(JsonUtils.convertToJson(postForSend), requestForPosts);
         assertStatusCode(responseFromApi, created);
         assertSendPost(postForSend, JsonUtils.jsonToObject(responseFromApi.getBody(), Post.class));
     }
 
     public static User getAllUsers() throws Throwable {
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForUsers);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(requestForUsers);
         assertStatusCode(responseFromApi, ok);
         User testUser = (User) JsonUtils.jsonToUsersArray(responseFromApi.getBody()).get(numberTestUser - 1);
         Assert.assertEquals(JsonUtils.readObjectFromJson(User.class, pathToTestUser), testUser, "Users not equals");
@@ -62,7 +60,7 @@ public class StepsApi {
     }
 
     public static void getUserByNumber(User testUser) throws Throwable {
-        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(urlRequest, requestForUsers, numberTestUser);
+        ResponseFromApi responseFromApi = JsonPlaceholderApi.executeGetRequest(requestForUsers, numberTestUser);
         assertStatusCode(responseFromApi, ok);
         Assert.assertEquals(JsonUtils.jsonToObject(responseFromApi.getBody(), User.class), testUser, "Users not equals");
     }

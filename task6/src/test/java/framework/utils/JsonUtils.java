@@ -32,13 +32,13 @@ public class JsonUtils {
         return new Gson().toJson(object, object.getClass());
     }
 
-    public static <T> ArrayList<T> jsonToPostArray(String bodyResponse) {
+    public static ArrayList<Post> jsonToPostArray(String bodyResponse) {
         Type itemsListType = new TypeToken<List<Post>>() {
         }.getType();
         return new Gson().fromJson(bodyResponse, itemsListType);
     }
 
-    public static <T> ArrayList<T> jsonToUsersArray(String bodyResponse) {
+    public static ArrayList<User> jsonToUsersArray(String bodyResponse) {
         Type itemsListType = new TypeToken<List<User>>() {
         }.getType();
         return new Gson().fromJson(bodyResponse, itemsListType);
