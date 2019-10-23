@@ -1,7 +1,7 @@
 package framework.configurations;
 
-
 public class Configuration {
+
     private static Environment currentEnvironment;
 
     private Configuration() {
@@ -13,5 +13,4 @@ public class Configuration {
                     : "stage").toUpperCase());
         return currentEnvironment;
     }
-
 }

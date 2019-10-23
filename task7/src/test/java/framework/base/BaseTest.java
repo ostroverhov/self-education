@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.internal.TestResult;
 import project.models.UploadScreenshot;
 
-import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseTest {
@@ -36,7 +35,7 @@ public abstract class BaseTest {
      * Make a browser window
      */
     @BeforeMethod
-    public void before() throws WebDriverException, MalformedURLException {
+    public void before() throws WebDriverException {
         logger.info("=== PRECONDITIONS ===");
         getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
         getBrowser().setWindowSize(1920, 1080);
@@ -46,7 +45,7 @@ public abstract class BaseTest {
      * Close browser and made screenshot after each test Class
      */
     @AfterMethod
-    public void afterMethod(ITestContext testContext, ITestResult testResult) throws Throwable {
+    public void afterMethod(ITestContext testContext, ITestResult testResult) throws Exception {
         TestStatus testStatus;
         if (testResult.getStatus() == TestResult.SUCCESS) {
             testStatus = TestStatus.PASSED;
