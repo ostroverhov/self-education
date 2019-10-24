@@ -14,10 +14,10 @@ public class ApiUtils {
     private static final Logger logger = Logger.getInstance();
     private static final String patternStatusCode = "HTTP\\/1\\.1 ([\\d]{3}) ";
 
-    public static ResponseFromApi sendGetRequestXML(String stringRequest) throws Throwable {
+    public static ResponseFromApi sendGetRequest(String stringRequest) throws Throwable {
         logger.info("Send get request " + stringRequest);
         HttpGet request = new HttpGet(stringRequest);
-        logger.info("Create response and set parameters");
+        logger.info("Get response");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(request)) {
             responseFromApi.setStatusCode(RegexpHandler.getNumbers(patternStatusCode, response.getStatusLine().toString()));

@@ -9,6 +9,6 @@ public class XmlPlaceholderApi {
 
     public static ResponseFromApi executeGetRequest() throws Throwable {
         logger.info("Execute GET request");
-        return ApiUtils.sendGetRequestXML(ReaderUtils.getUrl());
+        return ApiUtils.sendGetRequest(ReaderUtils.getUrl());
     }
 }
