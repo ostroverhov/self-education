@@ -33,6 +33,7 @@ public class ApiUtils {
     }
 
     private static ResponseFromApi executeRequest(HttpRequestBase httpRequestBase) throws Throwable {
+        logger.info("Get response from request");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(httpRequestBase)) {
             responseFromApi.setStatusCode(RegexpHandler.getStatusCode(patternStatusCode, response.getStatusLine().toString()));

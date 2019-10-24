@@ -2,15 +2,11 @@ package framework.utils;
 
 import aquality.selenium.logger.Logger;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import project.models.Post;
-import project.models.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class JsonUtils {
 
@@ -32,15 +28,7 @@ public class JsonUtils {
         return new Gson().toJson(object, object.getClass());
     }
 
-    public static ArrayList<Post> jsonToPostArray(String bodyResponse) {
-        Type itemsListType = new TypeToken<List<Post>>() {
-        }.getType();
-        return new Gson().fromJson(bodyResponse, itemsListType);
-    }
-
-    public static ArrayList<User> jsonToUsersArray(String bodyResponse) {
-        Type itemsListType = new TypeToken<List<User>>() {
-        }.getType();
+    public static <T> ArrayList<T> jsonToArray(String bodyResponse, Type itemsListType) {
         return new Gson().fromJson(bodyResponse, itemsListType);
     }
 
