@@ -1,60 +1,56 @@
 package project.steps;
 
 import framework.utils.JsonPlaceholderApi;
-import framework.utils.RandomUtils;
 import org.testng.Assert;
 import project.models.*;
 
 public class StepsApi {
 
-
-    public static void randomTest() {
-        Assert.assertTrue(RandomUtils.generateRandomBoolean());
+    public static int createSuite() throws Throwable {
+        Suite createdSuite = JsonPlaceholderApi.createSuite();
+        Assert.assertEquals(createdSuite, JsonPlaceholderApi.getSuite(createdSuite.getId()), "Suites not equals");
+        System.out.println(JsonPlaceholderApi.getSuite(createdSuite.getId()));
+        return createdSuite.getId();
     }
 
-    public static Suite createSuite() throws Throwable {
-        return JsonPlaceholderApi.createSuite();
+    public static int createSection(int suiteId) throws Throwable {
+        Section testSection = JsonPlaceholderApi.createSection(suiteId);
+        Assert.assertEquals(testSection, JsonPlaceholderApi.getSection(testSection.getId()), "Section not equals");
+        System.out.println(JsonPlaceholderApi.getSection(testSection.getId()));
+        return testSection.getId();
     }
 
-    public static Suite getSuite(int idSuite) throws Throwable {
-        return JsonPlaceholderApi.getSuite(idSuite);
+    public static int createCase(int idSection) throws Throwable {
+        Case testCase = JsonPlaceholderApi.createCase(idSection);
+        Assert.assertEquals(testCase, JsonPlaceholderApi.getCase(testCase.getId()), "cases not equals");
+        System.out.println(JsonPlaceholderApi.getCase(testCase.getId()));
+        return testCase.getId();
     }
 
-    public static Section createSection(int suiteId) throws Throwable {
-        return JsonPlaceholderApi.createSection(suiteId);
-    }
-
-    public static Section getSection(int idSection) throws Throwable {
-        return JsonPlaceholderApi.getSection(idSection);
-    }
-
-    public static Case createCase(int idSection) throws Throwable {
-        return JsonPlaceholderApi.createCase(idSection);
-    }
-
-    public static Case getCase(int idCase) throws Throwable {
-        return JsonPlaceholderApi.getCase(idCase);
-    }
-
-    public static Run createRun(int idSection) throws Throwable {
-        return JsonPlaceholderApi.createRun(idSection);
-    }
-
-    public static Run getRun(int idCase) throws Throwable {
-        return JsonPlaceholderApi.getRun(idCase);
+    public static int createRun(int idSection) throws Throwable {
+        Run testRun = JsonPlaceholderApi.createRun(idSection);
+        Assert.assertEquals(testRun, JsonPlaceholderApi.getRun(testRun.getId()), "Run not equals");
+        System.out.println(JsonPlaceholderApi.getRun(testRun.getId()));
+        return testRun.getId();
     }
 
     public static Result addResult(int idRun, int idCase) throws Throwable {
         return JsonPlaceholderApi.addResult(idRun, idCase);
     }
 
-    public static Result getResult(int idRun, int idCase) throws Throwable {
-        return JsonPlaceholderApi.getResult(idRun, idCase);
+    public static void deleteSuite(int idSuite) throws Throwable {
+        JsonPlaceholderApi.deleteSuite(idSuite);
     }
 
+    public static void deleteSection(int idSection) throws Throwable {
+        JsonPlaceholderApi.deleteSection(idSection);
+    }
 
-//    public static String sendGetSections() throws Throwable {
-//        return ApiUtils.sendGet("https://tr.a1qa.com/index.php?/api/v2/get_sections/140&suite_id=11515");
-//    }
+    public static void deleteCase(int idCase) throws Throwable {
+        JsonPlaceholderApi.deleteCase(idCase);
+    }
 
+    public static void deleteRun(int idRun) throws Throwable {
+        JsonPlaceholderApi.deleteRun(idRun);
+    }
 }

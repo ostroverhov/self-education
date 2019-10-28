@@ -2,6 +2,8 @@ package project.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Section {
 
     @SerializedName("id")
@@ -15,6 +17,21 @@ public class Section {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Section section = (Section) o;
+        return id == section.id &&
+                Objects.equals(name, section.name) &&
+                Objects.equals(suiteId, section.suiteId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, suiteId);
     }
 
     @Override

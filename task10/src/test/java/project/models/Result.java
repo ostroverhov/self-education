@@ -7,14 +7,14 @@ public class Result {
     @SerializedName("status_id")
     private String statusId;
 
-    @SerializedName("comment")
-    private String comment;
+    @SerializedName("test_id")
+    private int testId;
 
     @Override
     public String toString() {
         return "Result{" +
                 "statusId='" + statusId + '\'' +
-                ", comment='" + comment + '\'' +
+                ", testId=" + testId +
                 '}';
     }
 }

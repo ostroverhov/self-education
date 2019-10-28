@@ -68,11 +68,6 @@ public class JsonPlaceholderApi {
         return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addResult, idRun, idCase), DataGenerator.generateResult()), Result.class);
     }
 
-    public static Result getResult(int idRun, int idCase) throws Throwable {
-        logger.info("get result");
-        return JsonUtils.jsonToObject(ApiUtils.sendGet(createStringRequest(addResult, idRun, idCase)), Result.class);
-    }
-
     public static void deleteRun(int idRun) throws Throwable {
         logger.info("Delete run");
         ApiUtils.sendPost(createStringRequest(deleteRun, idRun), "");
@@ -93,7 +88,6 @@ public class JsonPlaceholderApi {
         ApiUtils.sendPost(createStringRequest(deleteSuite, idSuite), "");
     }
 
-
     private static String createStringRequest(Object... args) {
         logger.info("Create string request");
         StringBuilder request = new StringBuilder(ReaderUtils.getUrl());
@@ -102,5 +96,4 @@ public class JsonPlaceholderApi {
         }
         return request.toString();
     }
-
 }

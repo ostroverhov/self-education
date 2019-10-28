@@ -8,7 +8,6 @@ import java.util.Random;
 public class RandomUtils {
 
     private static final Logger logger = Logger.getInstance();
-    private static final int randomRange = 10000000;
 
     public static String generateRandomString(int lengthRandomString) {
         logger.info("Generate random string");
@@ -19,7 +18,7 @@ public class RandomUtils {
         return new Random().nextBoolean();
     }
 
-    public static int generateRandomNumber() {
+    public static int generateRandomNumber(int randomRange) {
         return new Random().nextInt(randomRange);
     }
 }
