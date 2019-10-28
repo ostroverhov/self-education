@@ -37,7 +37,9 @@ public class ApiUtils {
         httpRequestBase.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoding);
         httpRequestBase.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(httpRequestBase)) {
-            return EntityUtils.toString(response.getEntity());
+            String responseEntity = EntityUtils.toString(response.getEntity());
+            logger.info(responseEntity);
+            return responseEntity;
         } catch (IOException e) {
             throw new IOException("Request can't be execute");
         }

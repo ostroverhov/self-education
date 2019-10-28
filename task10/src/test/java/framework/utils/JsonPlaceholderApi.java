@@ -25,47 +25,47 @@ public class JsonPlaceholderApi {
 
     public static Suite createSuite() throws Throwable {
         logger.info("Create suite");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addSuite, 140), DataGenerator.generateSuite()), Suite.class);
+        return addToTestRail(createStringRequest(addSuite, 140), DataGenerator.generateSuite(), Suite.class);
     }
 
     public static Suite getSuite(int idSuite) throws Throwable {
         logger.info("Get suite");
-        return JsonUtils.jsonToObject(ApiUtils.sendGet(createStringRequest(getSuite, idSuite)), Suite.class);
+        return getFromTestRail(createStringRequest(getSuite, idSuite), Suite.class);
     }
 
     public static Section createSection(int id) throws Throwable {
         logger.info("Create section");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addSection, 140), DataGenerator.generateSection(id)), Section.class);
+        return addToTestRail(createStringRequest(addSection, 140), DataGenerator.generateSection(id), Section.class);
     }
 
     public static Section getSection(int idSection) throws Throwable {
         logger.info("Get section");
-        return JsonUtils.jsonToObject(ApiUtils.sendGet(createStringRequest(getSection, idSection)), Section.class);
+        return getFromTestRail(createStringRequest(getSection, idSection), Section.class);
     }
 
     public static Case createCase(int idSection) throws Throwable {
         logger.info("Create case");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addCase, idSection), DataGenerator.generateCase(idSection)), Case.class);
+        return addToTestRail(createStringRequest(addCase, idSection), DataGenerator.generateCase(idSection), Case.class);
     }
 
     public static Case getCase(int idCase) throws Throwable {
         logger.info("Get case");
-        return JsonUtils.jsonToObject(ApiUtils.sendGet(createStringRequest(getCase, idCase)), Case.class);
+        return getFromTestRail(createStringRequest(getCase, idCase), Case.class);
     }
 
     public static Run createRun(int idCase) throws Throwable {
         logger.info("Create run");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addRun, 140), DataGenerator.generateRun(idCase)), Run.class);
+        return addToTestRail(createStringRequest(addRun, 140), DataGenerator.generateRun(idCase), Run.class);
     }
 
     public static Run getRun(int idRun) throws Throwable {
         logger.info("Get run");
-        return JsonUtils.jsonToObject(ApiUtils.sendGet(createStringRequest(getRun, idRun)), Run.class);
+        return getFromTestRail(createStringRequest(getRun, idRun), Run.class);
     }
 
     public static Result addResult(int idRun, int idCase) throws Throwable {
         logger.info("Add result");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(addResult, idRun, idCase), DataGenerator.generateResult()), Result.class);
+        return addToTestRail(createStringRequest(addResult, idRun, idCase), DataGenerator.generateResult(), Result.class);
     }
 
     public static void deleteRun(int idRun) throws Throwable {
@@ -86,6 +86,14 @@ public class JsonPlaceholderApi {
     public static void deleteSuite(int idSuite) throws Throwable {
         logger.info("Delete suite");
         ApiUtils.sendPost(createStringRequest(deleteSuite, idSuite), "");
+    }
+
+    private static <T> T addToTestRail(String request, String dataForRequest, Class<T> tClass) throws Throwable {
+        return JsonUtils.jsonToObject(ApiUtils.sendPost(request, dataForRequest), tClass);
+    }
+
+    private static <T> T getFromTestRail(String request, Class<T> tClass) throws Throwable {
+        return JsonUtils.jsonToObject(ApiUtils.sendGet(request), tClass);
     }
 
     private static String createStringRequest(Object... args) {
