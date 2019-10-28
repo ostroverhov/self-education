@@ -15,7 +15,7 @@ public class CookiesSteps {
     private static final String thirdCookieNewValue = "example_value_300";
 
     public static void openMainPage(MainPage mainPage) {
-        Assert.assertTrue(mainPage.isFormDisplayed(), " not found");
+        Assert.assertTrue(mainPage.isFormDisplayed(), "Main page not found");
     }
 
     public static void addCookies() {

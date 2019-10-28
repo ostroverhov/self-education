@@ -3,6 +3,7 @@ package framework.utils;
 import aquality.selenium.browser.BrowserManager;
 import aquality.selenium.logger.Logger;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
 
 public class CookieUtils {
 
@@ -10,26 +11,31 @@ public class CookieUtils {
 
     public static void addCookie(String key, String value) {
         logger.info("Add cookie " + key);
-        BrowserManager.getBrowser().getDriver().manage().addCookie(new Cookie(key, value));
+        getManager().addCookie(new Cookie(key, value));
     }
 
     public static boolean isExistCookie(String key) {
         logger.info("Check cookie is exist " + key);
-        return BrowserManager.getBrowser().getDriver().manage().getCookies().contains(getCookie(key));
+        return getManager().getCookies().contains(getCookie(key));
     }
 
     public static void deleteCookie(String key) {
         logger.info("Delete cookie " + key);
-        BrowserManager.getBrowser().getDriver().manage().deleteCookie(getCookie(key));
+        getManager().deleteCookie(getCookie(key));
     }
 
     public static Cookie getCookie(String key) {
         logger.info("Get cookie " + key);
-        return BrowserManager.getBrowser().getDriver().manage().getCookieNamed(key);
+        return getManager().getCookieNamed(key);
     }
 
     public static void deleteAllCookie() {
         logger.info("Delete all cookies");
-        BrowserManager.getBrowser().getDriver().manage().deleteAllCookies();
+        getManager().deleteAllCookies();
+    }
+
+    private static WebDriver.Options getManager() {
+        logger.info("Get manager");
+        return BrowserManager.getBrowser().getDriver().manage();
     }
 }
