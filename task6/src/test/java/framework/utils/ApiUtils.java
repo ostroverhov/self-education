@@ -36,8 +36,12 @@ public class ApiUtils {
         logger.info("Get response from request");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(httpRequestBase)) {
-            responseFromApi.setStatusCode(RegexpHandler.getStatusCode(patternStatusCode, response.getStatusLine().toString()));
-            responseFromApi.setBody(EntityUtils.toString(response.getEntity()));
+            String statusLine = response.getStatusLine().toString();
+            logger.info(statusLine);
+            responseFromApi.setStatusCode(RegexpHandler.getStatusCode(patternStatusCode, statusLine));
+            String responseEntity = EntityUtils.toString(response.getEntity());
+            logger.info(responseEntity);
+            responseFromApi.setBody(responseEntity);
         } catch (IOException e) {
             throw new IOException("Request can't be execute");
         }
