@@ -4,6 +4,7 @@ import framework.utils.RegexpHandler;
 import framework.utils.XmlPlaceholderApi;
 import framework.utils.XmlUtils;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import project.models.Book;
 import project.models.Catalog;
 import project.models.ResponseFromApi;
@@ -17,7 +18,9 @@ public class StepsApi {
     public static Catalog getAllBook() throws Throwable {
         ResponseFromApi responseFromApi = XmlPlaceholderApi.executeGetRequest();
         assertStatusCode(responseFromApi, ok);
-        Catalog catalog = XmlUtils.getCatalog(responseFromApi.getBody());
+        String responseBody = responseFromApi.getBody();
+        Assert.assertTrue(XmlUtils.validateXmlResponse(responseBody), "Response not validate as XML");
+        Catalog catalog = XmlUtils.getCatalog(responseBody);
         assertOrderArrayBooks(catalog);
         return catalog;
     }
@@ -28,7 +31,8 @@ public class StepsApi {
 
     private static void assertOrderArrayBooks(Catalog catalog) {
         for (int i = 0; i < catalog.getBooks().size() - 1; i++) {
-            Assert.assertTrue(getIdBookFromArray(catalog, i + 1) > getIdBookFromArray(catalog, i), "Post number " + getIdBookFromArray(catalog, i) + " not match");
+            int idBookFromArray = getIdBookFromArray(catalog, i);
+            Assert.assertTrue(getIdBookFromArray(catalog, i + 1) > idBookFromArray, String.format("Post number %s not match", idBookFromArray));
         }
     }
 
@@ -41,7 +45,9 @@ public class StepsApi {
     }
 
     private static void assertNameAndDescriptionBooks(Book maxPrice, Book minPrice) {
-        Assert.assertNotEquals(maxPrice.getTitle(), minPrice.getTitle(), "Title not equals");
-        Assert.assertNotEquals(maxPrice.getDescription(), minPrice.getDescription(), "Description not equals");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertNotEquals(maxPrice.getTitle(), minPrice.getTitle(), "Title not equals");
+        softAssert.assertNotEquals(maxPrice.getDescription(), minPrice.getDescription(), "Description not equals");
+        softAssert.assertAll();
     }
 }

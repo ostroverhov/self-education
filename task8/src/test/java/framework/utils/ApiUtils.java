@@ -20,8 +20,12 @@ public class ApiUtils {
         logger.info("Get response");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(request)) {
-            responseFromApi.setStatusCode(RegexpHandler.getNumbers(patternStatusCode, response.getStatusLine().toString()));
-            responseFromApi.setBody(EntityUtils.toString(response.getEntity()));
+            String statusLine = response.getStatusLine().toString();
+            logger.info("Get status line " + statusLine);
+            responseFromApi.setStatusCode(RegexpHandler.getNumbers(patternStatusCode, statusLine));
+            String responseEntity = EntityUtils.toString(response.getEntity());
+            logger.info("Get response entity " + responseEntity);
+            responseFromApi.setBody(responseEntity);
         } catch (IOException e) {
             throw new IOException("Request can't be execute");
         }

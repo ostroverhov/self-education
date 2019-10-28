@@ -101,6 +101,15 @@
             <version>2.3.0-b170127.1453</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/xmlunit/xmlunit -->
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
