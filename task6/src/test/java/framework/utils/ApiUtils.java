@@ -37,10 +37,10 @@ public class ApiUtils {
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(httpRequestBase)) {
             String statusLine = response.getStatusLine().toString();
-            logger.info(statusLine);
+            logger.info("Get status line " + statusLine);
             responseFromApi.setStatusCode(RegexpHandler.getStatusCode(patternStatusCode, statusLine));
             String responseEntity = EntityUtils.toString(response.getEntity());
-            logger.info(responseEntity);
+            logger.info("Get response entity " + responseEntity);
             responseFromApi.setBody(responseEntity);
         } catch (IOException e) {
             throw new IOException("Request can't be execute");
