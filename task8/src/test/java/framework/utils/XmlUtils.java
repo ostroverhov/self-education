@@ -25,6 +25,7 @@ import java.util.List;
 public class XmlUtils {
 
     private static final Logger logger = Logger.getInstance();
+    private static final String addressSchemaFile = "https://www.w3.org/2001/XMLSchema.xsd";
 
     public static Catalog getCatalog(String response) throws JAXBException {
         logger.info("Get catalog from response");
@@ -36,7 +37,7 @@ public class XmlUtils {
     public static boolean validateXmlResponse(String response) {
         try {
             Source xmlFile = new StreamSource(new ByteArrayInputStream(response.getBytes()));
-            URL schemaFile = new URL("https://www.w3.org/2001/XMLSchema.xsd");
+            URL schemaFile = new URL(addressSchemaFile);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
