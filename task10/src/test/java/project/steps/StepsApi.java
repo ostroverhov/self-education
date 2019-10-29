@@ -1,6 +1,6 @@
 package project.steps;
 
-import framework.utils.JsonPlaceholderApi;
+import framework.utils.TestRailPlaceholderApi;
 import org.testng.Assert;
 import project.models.Case;
 import project.models.Run;
@@ -10,46 +10,30 @@ import project.models.Suite;
 public class StepsApi {
 
     public static int createSuite() throws Throwable {
-        Suite createdSuite = JsonPlaceholderApi.createSuite();
-        Assert.assertEquals(createdSuite, JsonPlaceholderApi.getSuite(createdSuite.getId()), "Suites not equals");
-        return createdSuite.getId();
+        Suite createdSuite = TestRailPlaceholderApi.createSuite();
+        int suiteId = createdSuite.getId();
+        Assert.assertEquals(createdSuite, TestRailPlaceholderApi.getSuite(suiteId), "Suites not equals");
+        return suiteId;
     }
 
     public static int createSection(int suiteId) throws Throwable {
-        Section testSection = JsonPlaceholderApi.createSection(suiteId);
-        Assert.assertEquals(testSection, JsonPlaceholderApi.getSection(testSection.getId()), "Section not equals");
-        return testSection.getId();
+        Section testSection = TestRailPlaceholderApi.createSection(suiteId);
+        int sectionId = testSection.getId();
+        Assert.assertEquals(testSection, TestRailPlaceholderApi.getSection(sectionId), "Section not equals");
+        return sectionId;
     }
 
     public static int createCase(int idSection) throws Throwable {
-        Case testCase = JsonPlaceholderApi.createCase(idSection);
-        Assert.assertEquals(testCase, JsonPlaceholderApi.getCase(testCase.getId()), "cases not equals");
-        return testCase.getId();
+        Case testCase = TestRailPlaceholderApi.createCase(idSection);
+        int caseId = testCase.getId();
+        Assert.assertEquals(testCase, TestRailPlaceholderApi.getCase(caseId), "cases not equals");
+        return caseId;
     }
 
     public static int createRun(int idSection) throws Throwable {
-        Run testRun = JsonPlaceholderApi.createRun(idSection);
-        Assert.assertEquals(testRun, JsonPlaceholderApi.getRun(testRun.getId()), "Run not equals");
-        return testRun.getId();
-    }
-
-    public static void addResult(int idRun, int idCase) throws Throwable {
-        JsonPlaceholderApi.addResult(idRun, idCase);
-    }
-
-    public static void deleteSuite(int idSuite) throws Throwable {
-        JsonPlaceholderApi.deleteSuite(idSuite);
-    }
-
-    public static void deleteSection(int idSection) throws Throwable {
-        JsonPlaceholderApi.deleteSection(idSection);
-    }
-
-    public static void deleteCase(int idCase) throws Throwable {
-        JsonPlaceholderApi.deleteCase(idCase);
-    }
-
-    public static void deleteRun(int idRun) throws Throwable {
-        JsonPlaceholderApi.deleteRun(idRun);
+        Run testRun = TestRailPlaceholderApi.createRun(idSection);
+        int runId = testRun.getId();
+        Assert.assertEquals(testRun, TestRailPlaceholderApi.getRun(runId), "Run not equals");
+        return runId;
     }
 }

@@ -5,7 +5,7 @@ import project.datastorage.DataGenerator;
 import project.models.*;
 
 
-public class JsonPlaceholderApi {
+public class TestRailPlaceholderApi {
 
     private static final Logger logger = Logger.getInstance();
 
