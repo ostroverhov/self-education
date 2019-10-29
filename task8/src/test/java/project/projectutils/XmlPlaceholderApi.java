@@ -1,6 +1,8 @@
-package framework.utils;
+package project.projectutils;
 
 import aquality.selenium.logger.Logger;
+import framework.utils.ApiUtils;
+import framework.utils.ReaderUtils;
 import project.models.ResponseFromApi;
 
 public class XmlPlaceholderApi {

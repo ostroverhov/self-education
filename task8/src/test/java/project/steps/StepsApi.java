@@ -1,7 +1,6 @@
 package project.steps;
 
 import framework.utils.RegexpHandler;
-import framework.utils.XmlPlaceholderApi;
 import framework.utils.XmlUtils;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -9,6 +8,7 @@ import project.models.Book;
 import project.models.Catalog;
 import project.models.ResponseFromApi;
 import project.projectutils.SelectionUtils;
+import project.projectutils.XmlPlaceholderApi;
 
 public class StepsApi {
 
@@ -20,7 +20,7 @@ public class StepsApi {
         assertStatusCode(responseFromApi, ok);
         String responseBody = responseFromApi.getBody();
         Assert.assertTrue(XmlUtils.validateXmlResponse(responseBody), "Response not validate as XML");
-        Catalog catalog = XmlUtils.getCatalog(responseBody);
+        Catalog catalog = (Catalog) XmlUtils.getObjectFromResponse(responseBody);
         assertOrderArrayBooks(catalog);
         return catalog;
     }

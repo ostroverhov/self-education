@@ -27,11 +27,11 @@ public class XmlUtils {
     private static final Logger logger = Logger.getInstance();
     private static final String addressSchemaFile = "https://www.w3.org/2001/XMLSchema.xsd";
 
-    public static Catalog getCatalog(String response) throws JAXBException {
+    public static Object getObjectFromResponse(String response) throws JAXBException {
         logger.info("Get catalog from response");
         JAXBContext jaxbContext = JAXBContext.newInstance(Catalog.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        return (Catalog) jaxbUnmarshaller.unmarshal(new StringReader(response));
+        return jaxbUnmarshaller.unmarshal(new StringReader(response));
     }
 
     public static boolean validateXmlResponse(String response) {
@@ -60,8 +60,8 @@ public class XmlUtils {
             });
             validator.validate(xmlFile);
         } catch (SAXException | IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.getMessage();
+            logger.error(ex.getMessage());
+            return false;
         }
         return true;
     }
