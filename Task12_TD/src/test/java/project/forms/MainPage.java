@@ -12,6 +12,10 @@ public class MainPage extends Form {
         super(By.xpath("//div[contains(@class,'panel-default')]"), "Main page");
     }
 
+    private MenuProjects menuProjects = new MenuProjects();
+    private AddProjectForm addProjectForm = new AddProjectForm();
+    private final ILabel footer = getElementFactory().getLabel(By.xpath("//div[@class='container']//p//span"), "Footer");
+
     public String getTextFromFooter() {
         return footer.getText();
     }
@@ -23,10 +27,4 @@ public class MainPage extends Form {
     public AddProjectForm getAddProjectForm() {
         return addProjectForm;
     }
-
-    private final ILabel footer = getElementFactory().getLabel(By.xpath("//div[@class='container']//p//span"), "Footer");
-
-    private MenuProjects menuProjects = new MenuProjects();
-
-    private AddProjectForm addProjectForm = new AddProjectForm();
 }

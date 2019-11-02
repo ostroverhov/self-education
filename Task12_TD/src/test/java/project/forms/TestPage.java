@@ -11,6 +11,10 @@ public class TestPage extends Form {
         super(By.xpath("//div[contains(@class,'panel-default')]"), "Test page");
     }
 
+    private PanelInfoOfTest panelInfoOfTest = new PanelInfoOfTest();
+    private final ILabel logLabel = getElementFactory().getLabel(By.xpath("//div[contains(text(),'Logs')]/following-sibling::table//tbody//tr//td"), "Log panel");
+    private final ILabel attachmentLabel = getElementFactory().getLabel(By.xpath("//div[contains(text(),'Attachments')]/following-sibling::table//tbody//tr[2]//td//a"), "Attachment panel");
+
     public PanelInfoOfTest getPanelInfoOfTest() {
         return panelInfoOfTest;
     }
@@ -22,8 +26,4 @@ public class TestPage extends Form {
     public String getAttachment() {
         return attachmentLabel.getAttribute("href");
     }
-
-    private PanelInfoOfTest panelInfoOfTest = new PanelInfoOfTest();
-    private final ILabel logLabel = getElementFactory().getLabel(By.xpath("//div[contains(text(),'Logs')]/following-sibling::table//tbody//tr[2]//td"), "Log panel");
-    private final ILabel attachmentLabel = getElementFactory().getLabel(By.xpath("//div[contains(text(),'Attachments')]/following-sibling::table//tbody//tr[2]//td"), "Attachment panel");
 }

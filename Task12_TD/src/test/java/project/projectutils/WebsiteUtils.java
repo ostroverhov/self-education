@@ -24,10 +24,10 @@ public class WebsiteUtils {
     public static void goToMainPage() {
         logger.info("Open main page");
         BrowserManager.getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
-        ;
     }
 
-    public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) { //todo in another class
+    public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) {
+        logger.info("Get tests from page");
         ArrayList<TestModel> tests = new ArrayList<>();
         for (int i = 1; i < elements.size(); i++) {
             TestModel testModel = new TestModel();
@@ -45,6 +45,7 @@ public class WebsiteUtils {
     }
 
     public static ArrayList<String> getNameTests(List<IElement> elements) {
+        logger.info("Get names of tests");
         ArrayList<String> tests = new ArrayList<>();
         for (IElement element : elements) {
             tests.add(element.getText());
@@ -53,6 +54,7 @@ public class WebsiteUtils {
     }
 
     private static String textFromChildElement(List<IElement> elements, int numberElement, String locator) {
+        logger.info("Get text from element " + numberElement);
         return elements.get(numberElement).findChildElement(By.xpath(locator), LABEL).getText();
     }
 }

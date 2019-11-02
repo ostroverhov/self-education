@@ -12,16 +12,4 @@ public class ResultTest {
 
     @SerializedName("suite_id")
     private String suiteId;
-
-    public int getTestId() {
-        return testId;
-    }
-
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public String getSuiteId() {
-        return suiteId;
-    }
 }

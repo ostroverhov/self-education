@@ -76,10 +76,6 @@ public class TestModel {
         this.endTime = endTime;
     }
 
-    public String getDuration() {
-        return duration;
-    }
-
     public void setDuration(String duration) {
         this.duration = duration;
     }

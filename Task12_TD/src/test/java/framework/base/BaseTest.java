@@ -53,8 +53,7 @@ public abstract class BaseTest {
         makeScreenshot();
 
         ScreenShotUtils.makeScreenshot(getBrowser().getDriver(), resultScreenshotName);
-        String imgUrl = ScreenShotUtils.uploadImage(resultScreenshotName).getUrl();
-        TestRailApi.setResult(testResult, imgUrl);
+        TestRailApi.setResult(testResult, ScreenShotUtils.uploadImage(resultScreenshotName).getUrl());
         logger.info("=== TEST '%1$s' '%2$s' ===", testContext.getName(), testStatus.toString(),
                 formatDuration(testResult.getEndMillis() - testResult.getStartMillis()));
         getBrowser().quit();

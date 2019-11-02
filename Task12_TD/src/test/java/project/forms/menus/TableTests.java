@@ -17,16 +17,14 @@ public class TableTests extends Form {
 
     private static final String patternGetTestId = "testId=((\\d)+)";
 
+    private final IButton testNameBtn = getElementFactory().getButton(By.xpath("//table[@class='table']//tr//td//a"), "Label test name");
+
     public TableTests() {
         super(By.xpath("//table[@class='table']//tbody"), "Table Tests");
     }
 
     public ArrayList<TestModel> getListTests() {
         return WebsiteUtils.getTestsFromTable(getElementFactory().findElements(By.xpath("//table[@class='table']//tr"), LABEL));
-    }
-
-    public boolean isPresentTest() {
-        return testNameBtn.getElement().isDisplayed();
     }
 
     public String getTestId() {
@@ -41,12 +39,8 @@ public class TableTests extends Form {
         getLastTest().click();
     }
 
-    private final IButton testNameBtn = getElementFactory().getButton(By.xpath("//table[@class='table']//tr//td//a"), "Label test name");
-
-    private final IElement getLastTest() {
+    private IElement getLastTest() {
         List<IElement> elements = getElementFactory().findElements(By.xpath("//table[@class='table']//tr//td//a[contains(@href,'testInfo')]"), LABEL);
         return elements.get(elements.size() - 1);
     }
-
-
 }

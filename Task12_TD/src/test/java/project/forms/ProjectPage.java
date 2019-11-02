@@ -10,10 +10,9 @@ public class ProjectPage extends Form {
         super(By.xpath("//table[@class='table']"), "Project page");
     }
 
+    private TableTests tableTests = new TableTests();
+
     public TableTests getTableTests() {
         return tableTests;
     }
-
-
-    private TableTests tableTests = new TableTests();
 }

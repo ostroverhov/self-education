@@ -19,6 +19,12 @@ public class MenuProjects extends Form {
 
     private static final String patternGetProjectId = "projectId=((\\d)+)";
 
+    private final IButton btnAddProject = getElementFactory().getButton(By.xpath("//div[@class='panel-heading']//button"), "Button add project");
+
+    private IButton getBtnFromMenu(String nameBtn) {
+        return getElementFactory().getButton(By.xpath(String.format("//div[@class='list-group']//a[contains(text(), '%s')]", nameBtn)), nameBtn);
+    }
+
     public void clickBtnProject(NameProject nameProject) {
         getBtnFromMenu(nameProject.getNameProject()).click();
     }
@@ -34,10 +40,4 @@ public class MenuProjects extends Form {
     public ArrayList<String> getListNameTests() {
         return WebsiteUtils.getNameTests(getElementFactory().findElements(By.xpath("//div[@class='list-group']//a"), LABEL));
     }
-
-    private IButton getBtnFromMenu(String nameBtn) {
-        return getElementFactory().getButton(By.xpath(String.format("//div[@class='list-group']//a[contains(text(), '%s')]", nameBtn)), nameBtn);
-    }
-
-    private final IButton btnAddProject = getElementFactory().getButton(By.xpath("//div[@class='panel-heading']//button"), "Button add project"); //todo подумай над локатором, вынеси общее с майном
 }

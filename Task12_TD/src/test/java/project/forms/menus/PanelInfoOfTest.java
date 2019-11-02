@@ -10,6 +10,16 @@ public class PanelInfoOfTest extends Form {
         super(By.xpath("//div[contains(@class,'panel-default')]//div[@class='list-group']"), "Add project form");
     }
 
+    private static final String labelsTestLocator = "//h4[contains(text(),'%s')]/following-sibling::p";
+    private static final String labelTimeLocator = "//p[contains(text(),'%s')]";
+    private final ILabel testName = getElementFactory().getLabel(By.xpath(String.format(labelsTestLocator, "Test name")), "Test name");
+    private final ILabel methodName = getElementFactory().getLabel(By.xpath(String.format(labelsTestLocator, "Test method name")), "Method name");
+    private final ILabel status = getElementFactory().getLabel(By.xpath(String.format(labelsTestLocator, "Status")), "Status");
+    private final ILabel startTime = getElementFactory().getLabel(By.xpath(String.format(labelTimeLocator, "Start time")), "Start time");
+    private final ILabel endTime = getElementFactory().getLabel(By.xpath(String.format(labelTimeLocator, "End time")), "End time");
+    private final ILabel environment = getElementFactory().getLabel(By.xpath(String.format(labelsTestLocator, "Environment")), "Environment");
+    private final ILabel browser = getElementFactory().getLabel(By.xpath(String.format(labelsTestLocator, "Browser")), "Browser");
+
     public String getNameTest() {
         return testName.getText();
     }
@@ -37,12 +47,4 @@ public class PanelInfoOfTest extends Form {
     public String getBrowser() {
         return browser.getText();
     }
-
-    private final ILabel testName = getElementFactory().getLabel(By.xpath("//h4[contains(text(),'Test name')]/following-sibling::p"), "Test name");
-    private final ILabel methodName = getElementFactory().getLabel(By.xpath("//h4[contains(text(),'Test method name')]/following-sibling::p"), "Method name");
-    private final ILabel status = getElementFactory().getLabel(By.xpath("//h4[contains(text(),'Status')]/following-sibling::p"), "Status");
-    private final ILabel startTime = getElementFactory().getLabel(By.xpath("//p[contains(text(),'Start time')]"), "Start time");
-    private final ILabel endTime = getElementFactory().getLabel(By.xpath("//p[contains(text(),'End time')]"), "End time");
-    private final ILabel environment = getElementFactory().getLabel(By.xpath("//h4[contains(text(),'Environment')]/following-sibling::p"), "Environment");
-    private final ILabel browser = getElementFactory().getLabel(By.xpath("//h4[contains(text(),'Browser')]/following-sibling::p"), "Browser");
 }

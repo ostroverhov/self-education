@@ -21,9 +21,8 @@ public class Requests {
     private static final String getToken = "/token/get?variant=";
     private static final String getTests = "/test/get/json?projectId=";
     private static final String addResult = "add_result_for_case";
-    private static final String encodingToApp = Base64.getEncoder().encodeToString((ReaderUtils.getParameter("login") + ":" + ReaderUtils.getParameter("password")).getBytes());
-    private static final String encodingToTestRail = Base64.getEncoder().encodeToString((ReaderUtils.getParameter("user") + ":" + ReaderUtils.getParameter("passwordTestRail")).getBytes());
-
+    private static final String encodingToApp = Base64.getEncoder().encodeToString(String.format("%s:%s", ReaderUtils.getParameter("login"), ReaderUtils.getParameter("password")).getBytes());
+    private static final String encodingToTestRail = Base64.getEncoder().encodeToString(String.format("%s:%s", ReaderUtils.getParameter("user"), ReaderUtils.getParameter("passwordTestRail")).getBytes());
 
     public static String getToken(String variant) throws Throwable {
         logger.info("Get token");
@@ -34,18 +33,12 @@ public class Requests {
         logger.info("Get tests");
         return JsonUtils.jsonToArray(ApiUtils.sendPost(createStringRequest(baseForRequestApi, getTests, numberProject), "", encodingToApp), new TypeToken<List<TestModel>>() {
         }.getType());
-//        return ApiUtils.sendPost(createStringRequest(getTests, numberProject), "");
     }
 
     public static ResultTest addResult(String request) throws Throwable {
         logger.info("Add result");
         return JsonUtils.jsonToObject(ApiUtils.sendPost(createStringRequest(baseForTestRail, addResult, "/", ReaderUtils.getParameter("runId"), "/", ReaderUtils.getParameter("caseId")), request, encodingToTestRail), ResultTest.class);
-//        return addToTestRail(createStringRequest(addResult, idRun, idCase), request, ResultTest.class);
     }
-
-//    private static <T> T addToTestRail(String request, String dataForRequest, Class<T> tClass) throws Throwable {
-//        return JsonUtils.jsonToObject(ApiUtils.sendPost(request, dataForRequest), tClass);
-//    }
 
     private static String createStringRequest(String baseForRequestApi, Object... args) {
         logger.info("Create string request");

@@ -6,13 +6,9 @@ import project.projectutils.JsScripts;
 
 public class JsUtils {
 
-    private static JavascriptExecutor js = (JavascriptExecutor) BrowserManager.getBrowser().getDriver();
+    private static JavascriptExecutor js = BrowserManager.getBrowser().getDriver();
 
     public static void closePopUp() {
         js.executeScript(JsScripts.SCRIPT);
     }
-
-//    public static void executeScript(String script) {
-//        js.executeScript(script);
-//    }
 }
