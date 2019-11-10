@@ -3,7 +3,6 @@ package project.projectutils;
 import aquality.selenium.browser.BrowserManager;
 import aquality.selenium.elements.interfaces.IElement;
 import aquality.selenium.logger.Logger;
-import framework.configurations.Configuration;
 import org.openqa.selenium.By;
 import project.models.TestModel;
 
@@ -21,9 +20,10 @@ public class WebsiteUtils {
         BrowserManager.getBrowser().getDriver().navigate().refresh();
     }
 
-    public static void goToMainPage() {
+    public static void goBack() {
         logger.info("Open main page");
-        BrowserManager.getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
+        BrowserManager.getBrowser().goBack();//todo check
+//        BrowserManager.getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
     }
 
     public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) {

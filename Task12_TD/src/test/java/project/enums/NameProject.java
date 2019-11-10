@@ -7,7 +7,6 @@ public enum NameProject {
     ENVISIA("Envisia"),
     IOTA("Iota"),
     MEGAFON("Megafon"),
-    NEWPROJECT(""),
     NEXAGE("Nexage");
 
     private String nameProject;
@@ -18,9 +17,5 @@ public enum NameProject {
 
     public String getNameProject() {
         return nameProject;
-    }
-
-    public void setNameProject(String nameProject) {
-        this.nameProject = nameProject;
     }
 }

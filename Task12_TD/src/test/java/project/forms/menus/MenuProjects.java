@@ -4,7 +4,6 @@ import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.forms.Form;
 import framework.utils.RegExpUtils;
 import org.openqa.selenium.By;
-import project.enums.NameProject;
 import project.projectutils.WebsiteUtils;
 
 import java.util.ArrayList;
@@ -25,12 +24,12 @@ public class MenuProjects extends Form {
         return getElementFactory().getButton(By.xpath(String.format("//div[@class='list-group']//a[contains(text(), '%s')]", nameBtn)), nameBtn);
     }
 
-    public void clickBtnProject(NameProject nameProject) {
-        getBtnFromMenu(nameProject.getNameProject()).click();
+    public void clickBtnProject(String nameProject) {
+        getBtnFromMenu(nameProject).click();
     }
 
-    public String getIdProject(NameProject nameProject) {
-        return RegExpUtils.getPartFromString(patternGetProjectId, getBtnFromMenu(nameProject.getNameProject()).getAttribute("href"));
+    public String getIdProject(String nameProject) {
+        return RegExpUtils.getPartFromString(patternGetProjectId, getBtnFromMenu(nameProject).getAttribute("href"));
     }
 
     public void clickBtnAddProject() {

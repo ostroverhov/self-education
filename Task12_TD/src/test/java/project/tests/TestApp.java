@@ -20,9 +20,9 @@ public class TestApp extends BaseTest {
         String token = StepsApp.getToken();
         StepsApp.setVariant(mainPage, token);
         StepsApp.goToPageNexage(mainPage, NEXAGE, projectPage);
-        StepsApp.createNewProject(mainPage);
+        String nameNewProject = StepsApp.createNewProject(mainPage);
         TestModel testModel = DataGenerator.generateTestExample();
-        StepsApp.addTestToProject(mainPage, testModel, projectPage);
+        StepsApp.addTestToProject(mainPage, testModel, projectPage, nameNewProject);
         StepsApp.checkLastTest(testModel, projectPage);
     }
 }

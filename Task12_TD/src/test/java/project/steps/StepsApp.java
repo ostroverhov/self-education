@@ -12,16 +12,15 @@ import project.forms.menus.MenuProjects;
 import project.forms.menus.PanelInfoOfTest;
 import project.forms.menus.TableTests;
 import project.models.TestModel;
-import project.projectutils.Requests;
+import project.projectutils.RequestsApp;
 import project.projectutils.SqlQueries;
 import project.projectutils.WebsiteUtils;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static project.enums.NameProject.NEWPROJECT;
 
 public class StepsApp {
 
@@ -34,7 +33,7 @@ public class StepsApp {
     private static final String pathToScreenshot = "src/test/resources/screenshot.png";
 
     public static String getToken() throws Throwable {
-        String token = Requests.getToken(variant);
+        String token = RequestsApp.getToken(variant);
         Assert.assertFalse(token.isEmpty(), "token don't get");
         return token;
     }
@@ -47,15 +46,15 @@ public class StepsApp {
     }
 
     public static void goToPageNexage(MainPage mainPage, NameProject nameProject, ProjectPage projectPage) throws Throwable {
-        ArrayList<TestModel> testsFromRequest = Requests.getTests(getMenuProjects(mainPage).getIdProject(nameProject));
-        getMenuProjects(mainPage).clickBtnProject(nameProject);
+        ArrayList<TestModel> testsFromRequest = RequestsApp.getTests(getMenuProjects(mainPage).getIdProject(nameProject.getNameProject()));
+        getMenuProjects(mainPage).clickBtnProject(nameProject.getNameProject());
         ArrayList<TestModel> testsFromPage = getTableTests(projectPage).getListTests();
         assertListDate(testsFromPage);
         Assert.assertTrue(testsFromRequest.containsAll(testsFromPage), "Collections not equals");
     }
 
-    public static void createNewProject(MainPage mainPage) {
-        WebsiteUtils.goToMainPage();
+    public static String createNewProject(MainPage mainPage) {
+        WebsiteUtils.goBack();
         getMenuProjects(mainPage).clickBtnAddProject();
         IframeUtils.switchToFrame(nameFrame);
         String nameNewProject = RandomUtils.generateRandomString(lengthRandomName);
@@ -67,19 +66,19 @@ public class StepsApp {
         Assert.assertTrue(getAddProjectForm(mainPage).isClosePopUp(), "Form add project not closed");
         WebsiteUtils.refreshPage();
         Assert.assertTrue(getMenuProjects(mainPage).getListNameTests().contains(nameNewProject), "Project not add");
-        NEWPROJECT.setNameProject(nameNewProject);
+        return nameNewProject;
     }
 
-    public static void addTestToProject(MainPage mainPage, TestModel testModel, ProjectPage projectPage) throws SQLException {
-        SqlUtils.executeQuery(SqlQueries.getQueryAddTest(getMenuProjects(mainPage).getIdProject(NEWPROJECT), testModel));
-        getMenuProjects(mainPage).clickBtnProject(NEWPROJECT);
+    public static void addTestToProject(MainPage mainPage, TestModel testModel, ProjectPage projectPage, String nameNewProject) throws SQLException, IOException {
+        SqlUtils.executeQuery(SqlQueries.getQueryAddTest(getMenuProjects(mainPage).getIdProject(nameNewProject), testModel));
+        getMenuProjects(mainPage).clickBtnProject(nameNewProject);
+        String idTest = getTableTests(projectPage).getTestId();
+        SqlUtils.executeQuery(SqlQueries.getQueryAddLog(pathToLogFile, idTest));
+        SqlUtils.executeQuery(SqlQueries.getQueryAddScreenshot(pathToScreenshot, idTest));
         Assert.assertEquals(getTableTests(projectPage).getNameLastTest(), testModel.getName(), "test not add");
     }
 
     public static void checkLastTest(TestModel testModel, ProjectPage projectPage) throws Exception {
-        String idTest = getTableTests(projectPage).getTestId();
-        SqlUtils.executeQuery(SqlQueries.getQueryAddLog(pathToLogFile, idTest));
-        SqlUtils.executeQuery(SqlQueries.getQueryAddScreenshot(pathToScreenshot, idTest));
         getTableTests(projectPage).clickLastTest();
         TestPage testPage = new TestPage();
         assertTests(testModel, testPage);

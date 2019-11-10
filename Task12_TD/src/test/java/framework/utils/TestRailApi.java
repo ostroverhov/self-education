@@ -4,7 +4,7 @@ import aquality.selenium.logger.Logger;
 import org.json.simple.JSONObject;
 import org.testng.ITestResult;
 import project.enums.StatusParameter;
-import project.projectutils.Requests;
+import project.projectutils.RequestsTestRail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ public class TestRailApi {
     public static void setResult(ITestResult result, String urlImg) throws Throwable {
         logger.info("Set result to testrail");
         if (result.getStatus() == ITestResult.SUCCESS) {
-            Requests.addResult(createJsonForSend(StatusParameter.PASSED, urlImg));
+            RequestsTestRail.addResult(createJsonForSend(StatusParameter.PASSED, urlImg));
         } else if (result.getStatus() == ITestResult.FAILURE) {
-            Requests.addResult(createJsonForSend(StatusParameter.FAILED, urlImg));
+            RequestsTestRail.addResult(createJsonForSend(StatusParameter.FAILED, urlImg));
         }
     }
 
