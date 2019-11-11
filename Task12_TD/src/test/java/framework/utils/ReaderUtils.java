@@ -17,18 +17,23 @@ public class ReaderUtils {
             FileInputStream fileInputStream = new FileInputStream(pathToCredentials);
             property.load(fileInputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("Can't read parameter " + parameter);
         }
         return property.getProperty(parameter);
     }
 
-    public static String readFile(String fileName) throws IOException {
+    public static String readFile(String fileName) {
         logger.info("Read file " + fileName);
-        BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
-        String line;
+        BufferedReader reader = null;
         StringBuilder stringBuilder = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
+        try {
+            reader = new BufferedReader(new FileReader(new File(fileName)));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } catch (IOException e) {
+            logger.warn("Can't read file " + fileName);
         }
         return stringBuilder.toString();
     }

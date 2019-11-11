@@ -16,8 +16,8 @@ public class RequestsTestRail {
     private static final String addResult = "add_result_for_case";
     private static final String encodingToTestRail = Base64.getEncoder().encodeToString(String.format("%s:%s", ReaderUtils.getParameter("user"), ReaderUtils.getParameter("passwordTestRail")).getBytes());
 
-    public static ResultTest addResult(String request) throws Throwable {
+    public static ResultTest addResult(String request) {
         logger.info("Add result");
-        return JsonUtils.jsonToObject(ApiUtils.sendPost(RequestUtils.createStringRequest(ReaderUtils.getParameter("testRailApi"), addResult, "/", ReaderUtils.getParameter("runId"), "/", ReaderUtils.getParameter("caseId")), request, encodingToTestRail), ResultTest.class);
+        return JsonUtils.jsonToObject(ApiUtils.sendPost(RequestUtils.createStringRequest(ReaderUtils.getParameter("testRailApi"), addResult, "/", ReaderUtils.getParameter("runId"), "/", ReaderUtils.getParameter("caseId")), request, encodingToTestRail).getBody(), ResultTest.class);
     }
 }

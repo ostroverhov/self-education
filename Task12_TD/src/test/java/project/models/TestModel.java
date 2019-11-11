@@ -1,5 +1,7 @@
 package project.models;
 
+import aquality.selenium.logger.Logger;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class TestModel {
     private String browser;
     private String env;
     private static final String patternDateTime = "yyyy-MM-dd hh:mm:ss";
+    private static final Logger logger = Logger.getInstance();
 
     public String getName() {
         return name;
@@ -48,7 +51,8 @@ public class TestModel {
             case "4":
                 return "Unfinished";
             default:
-                throw new Exception("wrong result");
+                logger.warn("");
+//                throw new Exception("wrong result");
         }
     }
 
@@ -60,8 +64,14 @@ public class TestModel {
         return startTime;
     }
 
-    public Date getStartDateTime() throws ParseException {
-        return new SimpleDateFormat(patternDateTime).parse(getStartTime());
+    public Date getStartDateTime() {
+        Date date = null;
+        try {
+            date = new SimpleDateFormat(patternDateTime).parse(getStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public void setStartTime(String startTime) {

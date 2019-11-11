@@ -20,33 +20,39 @@ public class ScreenShotUtils {
 
     private static final Logger logger = Logger.getInstance();
 
-    public static void makeScreenshot(WebDriver driver, String nameScreenshot) throws IOException {
+    public static void makeScreenshot(WebDriver driver, String nameScreenshot) {
         logger.info("Make screenshot " + nameScreenshot);
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(scrFile, new File(nameScreenshot));
         } catch (IOException e) {
-            throw new IOException("Screenshot don't make");
+            logger.warn("Screenshot don't make");
         }
     }
 
-    public static UploadScreenshot uploadImage(String nameImage) throws IOException {
+    public static UploadScreenshot uploadImage(String nameImage) {
         logger.info("Upload image " + nameImage);
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", ReaderUtils.getParameter("cloudName"),
                 "api_key", ReaderUtils.getParameter("apiKey"),
                 "api_secret", ReaderUtils.getParameter("apiSecret")));
         File file = new File(nameImage);
-        Map result;
+        Map result = null;
         try {
             result = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
         } catch (IOException e) {
-            throw new IOException("Image don't upload");
+            logger.warn("Image don't upload");
         }
         return new Gson().fromJson(String.valueOf(new JSONObject(result)), UploadScreenshot.class);
     }
 
-    public static String screenShotToString(String pathToScreenshot) throws IOException {
-        return Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(pathToScreenshot)));
+    public static String screenShotToString(String pathToScreenshot) {
+        String screenshotCode = null;
+        try {
+            screenshotCode = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(pathToScreenshot)));
+        } catch (IOException e) {
+            logger.warn("Can't convert screenshot to string");
+        }
+        return screenshotCode;
     }
 }

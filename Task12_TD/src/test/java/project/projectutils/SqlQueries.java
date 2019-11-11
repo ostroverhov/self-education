@@ -6,8 +6,6 @@ import framework.utils.ScreenShotUtils;
 import framework.utils.SqlUtils;
 import project.models.TestModel;
 
-import java.io.IOException;
-
 public class SqlQueries {
 
     private static final Logger logger = Logger.getInstance();
@@ -20,19 +18,19 @@ public class SqlQueries {
     private static final String fileQueryAddLog = "queryAddLog.sql";
     private static final String fileQueryAddScreenshot = "queryAddScreenshot.sql";
 
-    public static String getQueryAddTest(String idProject, TestModel testModel) throws IOException {
+    public static String getQueryAddTest(String idProject, TestModel testModel) {
         String query = String.format(SqlUtils.getQueryString(fileQueryAddTest), testModel.getName(), testModel.getStatus(), testModel.getMethod(), idProject, testModel.getStartTime(), testModel.getEndTime(), testModel.getEnvironment(), testModel.getBrowser());
         logger.info("create query add test " + query);
         return query;
     }
 
-    public static String getQueryAddLog(String pathToLogFile, String idTest) throws IOException {
+    public static String getQueryAddLog(String pathToLogFile, String idTest) {
         String query = String.format(SqlUtils.getQueryString(fileQueryAddLog), ReaderUtils.readFile(pathToLogFile), idTest);
         logger.info("create query add log " + query);
         return query;
     }
 
-    public static String getQueryAddScreenshot(String pathToScreenShot, String idTest) throws IOException {
+    public static String getQueryAddScreenshot(String pathToScreenShot, String idTest) {
         String query = String.format(SqlUtils.getQueryString(fileQueryAddScreenshot), ScreenShotUtils.screenShotToString(pathToScreenShot), idTest);
         logger.info("create query add screenshot " + query);
         return query;

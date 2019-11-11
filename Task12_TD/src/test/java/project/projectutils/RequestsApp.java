@@ -6,6 +6,7 @@ import framework.utils.ApiUtils;
 import framework.utils.JsonUtils;
 import framework.utils.ReaderUtils;
 import framework.utils.RequestUtils;
+import project.models.ResponseFromApi;
 import project.models.TestModel;
 
 import java.util.ArrayList;
@@ -21,14 +22,14 @@ public class RequestsApp {
     private static final String getTests = "/test/get/json?projectId=";
     private static final String encodingToApp = Base64.getEncoder().encodeToString(String.format("%s:%s", ReaderUtils.getParameter("login"), ReaderUtils.getParameter("password")).getBytes());
 
-    public static String getToken(String variant) throws Throwable {
+    public static ResponseFromApi getToken(String variant) {
         logger.info("Get token");
         return ApiUtils.sendPost(RequestUtils.createStringRequest(baseForRequestApi, getToken, variant), "", encodingToApp);
     }
 
-    public static ArrayList<TestModel> getTests(String numberProject) throws Throwable {
+    public static ArrayList<TestModel> getTests(String numberProject) {
         logger.info("Get tests");
-        return JsonUtils.jsonToArray(ApiUtils.sendPost(RequestUtils.createStringRequest(baseForRequestApi, getTests, numberProject), "", encodingToApp), new TypeToken<List<TestModel>>() {
+        return JsonUtils.jsonToArray(ApiUtils.sendPost(RequestUtils.createStringRequest(baseForRequestApi, getTests, numberProject), "", encodingToApp).getBody(), new TypeToken<List<TestModel>>() {
         }.getType());
     }
 }

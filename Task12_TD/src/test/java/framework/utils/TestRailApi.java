@@ -13,12 +13,16 @@ public class TestRailApi {
 
     private static final Logger logger = Logger.getInstance();
 
-    public static void setResult(ITestResult result, String urlImg) throws Throwable {
+    public static void setResult(ITestResult result, String urlImg) {
         logger.info("Set result to testrail");
-        if (result.getStatus() == ITestResult.SUCCESS) {
-            RequestsTestRail.addResult(createJsonForSend(StatusParameter.PASSED, urlImg));
-        } else if (result.getStatus() == ITestResult.FAILURE) {
-            RequestsTestRail.addResult(createJsonForSend(StatusParameter.FAILED, urlImg));
+        try {
+            if (result.getStatus() == ITestResult.SUCCESS) {
+                RequestsTestRail.addResult(createJsonForSend(StatusParameter.PASSED, urlImg));
+            } else if (result.getStatus() == ITestResult.FAILURE) {
+                RequestsTestRail.addResult(createJsonForSend(StatusParameter.FAILED, urlImg));
+            }
+        } catch (Throwable throwable) {
+            logger.warn("Can't set result to testrail");
         }
     }
 

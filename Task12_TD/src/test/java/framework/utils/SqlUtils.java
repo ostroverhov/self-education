@@ -14,14 +14,19 @@ public class SqlUtils {
 
     private static final String pathToSqlQuery = "src/test/resources/sqlqueries/";
 
-    public static String getQueryString(String fileName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(pathToSqlQuery + fileName));
-        String line;
+    public static String getQueryString(String fileName) {
+        BufferedReader reader;
         StringBuilder stringBuilder = new StringBuilder();
-        String property = System.getProperty("line.separator");
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
-            stringBuilder.append(property);
+        try {
+            reader = new BufferedReader(new FileReader(pathToSqlQuery + fileName));
+            String line;
+            String property = System.getProperty("line.separator");
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(property);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
     }

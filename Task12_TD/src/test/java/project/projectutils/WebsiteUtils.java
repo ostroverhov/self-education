@@ -22,8 +22,7 @@ public class WebsiteUtils {
 
     public static void goBack() {
         logger.info("Open main page");
-        BrowserManager.getBrowser().goBack();//todo check
-//        BrowserManager.getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
+        BrowserManager.getBrowser().goBack();
     }
 
     public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) {

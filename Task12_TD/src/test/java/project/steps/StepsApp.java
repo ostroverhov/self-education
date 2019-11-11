@@ -11,6 +11,7 @@ import project.forms.menus.AddProjectForm;
 import project.forms.menus.MenuProjects;
 import project.forms.menus.PanelInfoOfTest;
 import project.forms.menus.TableTests;
+import project.models.ResponseFromApi;
 import project.models.TestModel;
 import project.projectutils.RequestsApp;
 import project.projectutils.SqlQueries;
@@ -18,7 +19,6 @@ import project.projectutils.WebsiteUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,11 +31,12 @@ public class StepsApp {
     private static final int lengthRandomName = 10;
     private static final String pathToLogFile = "src/test/resources/logResult.txt";
     private static final String pathToScreenshot = "src/test/resources/screenshot.png";
+    private static final String ok = "200";
 
-    public static String getToken() throws Throwable {
-        String token = RequestsApp.getToken(variant);
-        Assert.assertFalse(token.isEmpty(), "token don't get");
-        return token;
+    public static String getToken() {
+        ResponseFromApi responseFromApi = RequestsApp.getToken(variant);
+        Assert.assertEquals(responseFromApi.getStatusCode(), ok, "token don't get");
+        return responseFromApi.getBody();
     }
 
     public static void setVariant(MainPage mainPage, String token) {
@@ -45,7 +46,7 @@ public class StepsApp {
         Assert.assertEquals(RegExpUtils.getPartFromString(patternGetVariant, mainPage.getTextFromFooter()), variant, "Variant not equals");
     }
 
-    public static void goToPageNexage(MainPage mainPage, NameProject nameProject, ProjectPage projectPage) throws Throwable {
+    public static void goToPageNexage(MainPage mainPage, NameProject nameProject, ProjectPage projectPage) {
         ArrayList<TestModel> testsFromRequest = RequestsApp.getTests(getMenuProjects(mainPage).getIdProject(nameProject.getNameProject()));
         getMenuProjects(mainPage).clickBtnProject(nameProject.getNameProject());
         ArrayList<TestModel> testsFromPage = getTableTests(projectPage).getListTests();
@@ -84,13 +85,13 @@ public class StepsApp {
         assertTests(testModel, testPage);
     }
 
-    private static void assertListDate(ArrayList<TestModel> tests) throws ParseException {
+    private static void assertListDate(ArrayList<TestModel> tests) {
         for (int i = 0; i < tests.size() - 1; i++) {
             Assert.assertTrue(getStartTimeOfTests(tests, i).after(getStartTimeOfTests(tests, i + 1)), "List not sorted at position" + i);
         }
     }
 
-    private static Date getStartTimeOfTests(ArrayList<TestModel> tests, int numberTest) throws ParseException {
+    private static Date getStartTimeOfTests(ArrayList<TestModel> tests, int numberTest) {
         return tests.get(numberTest).getStartDateTime();
     }
 
