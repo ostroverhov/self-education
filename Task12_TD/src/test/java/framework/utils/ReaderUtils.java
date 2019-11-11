@@ -24,7 +24,7 @@ public class ReaderUtils {
 
     public static String readFile(String fileName) {
         logger.info("Read file " + fileName);
-        BufferedReader reader = null;
+        BufferedReader reader;
         StringBuilder stringBuilder = new StringBuilder();
         try {
             reader = new BufferedReader(new FileReader(new File(fileName)));

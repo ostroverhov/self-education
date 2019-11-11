@@ -1,6 +1,5 @@
 package project.projectutils;
 
-import aquality.selenium.browser.BrowserManager;
 import aquality.selenium.elements.interfaces.IElement;
 import aquality.selenium.logger.Logger;
 import org.openqa.selenium.By;
@@ -14,16 +13,6 @@ import static aquality.selenium.elements.ElementType.LABEL;
 public class WebsiteUtils {
 
     private static final Logger logger = Logger.getInstance();
-
-    public static void refreshPage() {
-        logger.info("Refresh page");
-        BrowserManager.getBrowser().getDriver().navigate().refresh();
-    }
-
-    public static void goBack() {
-        logger.info("Open main page");
-        BrowserManager.getBrowser().goBack();
-    }
 
     public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) {
         logger.info("Get tests from page");

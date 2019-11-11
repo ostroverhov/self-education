@@ -25,7 +25,7 @@ public abstract class BaseTest {
     /**
      * To override.
      */
-    protected abstract void runTest() throws Throwable;
+    protected abstract void runTest();
 
     /**
      * Before Class method
@@ -43,7 +43,7 @@ public abstract class BaseTest {
      * Close browser and made screenshot after each test Class
      */
     @AfterMethod(alwaysRun = true)
-    public void afterMethod(ITestContext testContext, ITestResult testResult) throws Throwable {
+    public void afterMethod(ITestContext testContext, ITestResult testResult) {
         TestStatus testStatus;
         if (testResult.getStatus() == TestResult.SUCCESS) {
             testStatus = TestStatus.PASSED;

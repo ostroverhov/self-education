@@ -11,18 +11,12 @@ import project.forms.menus.AddProjectForm;
 import project.forms.menus.MenuProjects;
 import project.forms.menus.PanelInfoOfTest;
 import project.forms.menus.TableTests;
-import project.models.ResponseFromApi;
 import project.models.TestModel;
-import project.projectutils.RequestsApp;
-import project.projectutils.SqlQueries;
-import project.projectutils.WebsiteUtils;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class StepsApp {
+public class PageSteps {
 
     private static final String variant = "1";
     private static final String cookieKey = "token";
@@ -31,31 +25,27 @@ public class StepsApp {
     private static final int lengthRandomName = 10;
     private static final String pathToLogFile = "src/test/resources/logResult.txt";
     private static final String pathToScreenshot = "src/test/resources/screenshot.png";
-    private static final String ok = "200";
 
-    public static String getToken() {
-        ResponseFromApi responseFromApi = RequestsApp.getToken(variant);
-        Assert.assertEquals(responseFromApi.getStatusCode(), ok, "token don't get");
-        return responseFromApi.getBody();
-    }
-
-    public static void setVariant(MainPage mainPage, String token) {
+    public static void setVariant(String token) {
+        MainPage mainPage = new MainPage();
         CookieUtils.addCookie(cookieKey, token);
         Assert.assertTrue(mainPage.isFormDisplayed(), "Main page not found");
-        WebsiteUtils.refreshPage();
+        BrowserUtils.refreshPage();
         Assert.assertEquals(RegExpUtils.getPartFromString(patternGetVariant, mainPage.getTextFromFooter()), variant, "Variant not equals");
     }
 
-    public static void goToPageNexage(MainPage mainPage, NameProject nameProject, ProjectPage projectPage) {
-        ArrayList<TestModel> testsFromRequest = RequestsApp.getTests(getMenuProjects(mainPage).getIdProject(nameProject.getNameProject()));
+    public static void goToPageOfProject(ArrayList<TestModel> testsFromRequest, NameProject nameProject) {
+        MainPage mainPage = new MainPage();
+        ProjectPage projectPage = new ProjectPage();
         getMenuProjects(mainPage).clickBtnProject(nameProject.getNameProject());
         ArrayList<TestModel> testsFromPage = getTableTests(projectPage).getListTests();
         assertListDate(testsFromPage);
         Assert.assertTrue(testsFromRequest.containsAll(testsFromPage), "Collections not equals");
     }
 
-    public static String createNewProject(MainPage mainPage) {
-        WebsiteUtils.goBack();
+    public static String createNewProject() {
+        MainPage mainPage = new MainPage();
+        BrowserUtils.goBack();
         getMenuProjects(mainPage).clickBtnAddProject();
         IframeUtils.switchToFrame(nameFrame);
         String nameNewProject = RandomUtils.generateRandomString(lengthRandomName);
@@ -65,21 +55,13 @@ public class StepsApp {
         IframeUtils.switchToMainPage();
         JsUtils.closePopUp();
         Assert.assertTrue(getAddProjectForm(mainPage).isClosePopUp(), "Form add project not closed");
-        WebsiteUtils.refreshPage();
-        Assert.assertTrue(getMenuProjects(mainPage).getListNameTests().contains(nameNewProject), "Project not add");
+        BrowserUtils.refreshPage();
+        Assert.assertTrue(getMenuProjects(mainPage).getListNameTests().contains(nameNewProject), "Project not add to list");
         return nameNewProject;
     }
 
-    public static void addTestToProject(MainPage mainPage, TestModel testModel, ProjectPage projectPage, String nameNewProject) throws SQLException, IOException {
-        SqlUtils.executeQuery(SqlQueries.getQueryAddTest(getMenuProjects(mainPage).getIdProject(nameNewProject), testModel));
-        getMenuProjects(mainPage).clickBtnProject(nameNewProject);
-        String idTest = getTableTests(projectPage).getTestId();
-        SqlUtils.executeQuery(SqlQueries.getQueryAddLog(pathToLogFile, idTest));
-        SqlUtils.executeQuery(SqlQueries.getQueryAddScreenshot(pathToScreenshot, idTest));
-        Assert.assertEquals(getTableTests(projectPage).getNameLastTest(), testModel.getName(), "test not add");
-    }
-
-    public static void checkLastTest(TestModel testModel, ProjectPage projectPage) throws Exception {
+    public static void checkLastTest(TestModel testModel) {
+        ProjectPage projectPage = new ProjectPage();
         getTableTests(projectPage).clickLastTest();
         TestPage testPage = new TestPage();
         assertTests(testModel, testPage);
@@ -95,17 +77,17 @@ public class StepsApp {
         return tests.get(numberTest).getStartDateTime();
     }
 
-    private static void assertTests(TestModel testModel, TestPage testPage) throws Exception {
+    private static void assertTests(TestModel testModel, TestPage testPage) {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(getPanelInfoOfTest(testPage).getNameTest(), testModel.getName(), "name not equals");
         softAssert.assertEquals(getPanelInfoOfTest(testPage).getMethodTest(), testModel.getMethod(), "method not equals");
         softAssert.assertEquals(getPanelInfoOfTest(testPage).getStatusTest(), testModel.getStatusWord(), "status not equals");
-        softAssert.assertTrue(getPanelInfoOfTest(testPage).getStartTimeTest().contains(testModel.getStartTime()), "start time not equals");
-        softAssert.assertTrue(getPanelInfoOfTest(testPage).getEndTimeTest().contains(testModel.getEndTime()), "end time not equals");
+        softAssert.assertEquals(getPanelInfoOfTest(testPage).getStartTimeTest(), testModel.getStartTime(), "start time not equals");
+        softAssert.assertEquals(getPanelInfoOfTest(testPage).getEndTimeTest(), testModel.getEndTime(), "end time not equals");
         softAssert.assertEquals(getPanelInfoOfTest(testPage).getEnvironmentTest(), testModel.getEnvironment(), "environment not equals");
         softAssert.assertEquals(getPanelInfoOfTest(testPage).getBrowser(), testModel.getBrowser(), "browser not equals");
         softAssert.assertEquals(testPage.getLog(), ReaderUtils.readFile(pathToLogFile), "log not equals");
-        softAssert.assertTrue(testPage.getAttachment().contains(ScreenShotUtils.screenShotToString(pathToScreenshot)), "Base64 code of image not equals");
+        softAssert.assertEquals(testPage.getAttachment(), ScreenShotUtils.screenShotToString(pathToScreenshot), "Base64 code of image not equals");
         softAssert.assertAll();
     }
 

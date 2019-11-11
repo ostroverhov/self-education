@@ -2,9 +2,6 @@ package framework.utils;
 
 import aquality.selenium.logger.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -12,31 +9,23 @@ public class SqlUtils {
 
     private static final Logger logger = Logger.getInstance();
 
-    private static final String pathToSqlQuery = "src/test/resources/sqlqueries/";
+    private static final String urlDataBase = ReaderUtils.getParameter("urlDataBase");
+    private static final String ip = ReaderUtils.getParameter("ip");
+    private static final String port = ReaderUtils.getParameter("port");
+    private static final String dataBase = ReaderUtils.getParameter("dataBase");
+    private static final String login = ReaderUtils.getParameter("login");
+    private static final String password = ReaderUtils.getParameter("password");
 
-    public static String getQueryString(String fileName) {
-        BufferedReader reader;
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            reader = new BufferedReader(new FileReader(pathToSqlQuery + fileName));
-            String line;
-            String property = System.getProperty("line.separator");
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append(property);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
-    }
-
-    public static void executeQuery(String sqlQuery) throws SQLException {
+    public static void executeQuery(String sqlQuery) {
         logger.info("execute query to database");
-        DriverManager.getConnection(String.format(("jdbc:mysql://%s:%s/%s"), getCredential("ip"), getCredential("port"), getCredential("dataBase")), getCredential("login"), getCredential("password")).prepareStatement(sqlQuery).executeUpdate();
+        try {
+            DriverManager.getConnection(getUrlDataBase(), login, password).prepareStatement(sqlQuery).executeUpdate();
+        } catch (SQLException e) {
+            logger.warn("Can't execute query");
+        }
     }
 
-    private static String getCredential(String parameter) {
-        return ReaderUtils.getParameter(parameter);
+    private static String getUrlDataBase() {
+        return String.format(("%s//%s:%s/%s"), urlDataBase, ip, port, dataBase);
     }
 }
