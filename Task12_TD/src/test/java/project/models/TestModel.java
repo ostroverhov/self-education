@@ -1,6 +1,5 @@
 package project.models;
 
-import aquality.selenium.logger.Logger;
 import project.enums.StatusTest;
 
 import java.text.ParseException;
@@ -19,7 +18,6 @@ public class TestModel {
     private String browser;
     private String env;
     private static final String patternDateTime = "yyyy-MM-dd hh:mm:ss";
-    private static final Logger logger = Logger.getInstance();
 
     public String getName() {
         return name;
@@ -43,20 +41,6 @@ public class TestModel {
 
     public String getStatusWord() {
         return StatusTest.getStatusTest(Integer.parseInt(getStatus()) - 1);
-//        String result = null;
-//        switch (getStatus()) {
-//            case "1":
-//                result = "Passed";
-//            case "2":
-//                result = "Failed";
-//            case "3":
-//                result = "Skipped";
-//            case "4":
-//                result = "Unfinished";
-//            default:
-//                logger.warn("wrong result");
-//        }
-//        return result;
     }
 
     public void setStatus(String status) {
@@ -71,7 +55,6 @@ public class TestModel {
         Date date = null;
         try {
             date = new SimpleDateFormat(patternDateTime).parse(getStartTime());
-
         } catch (ParseException e) {
             e.printStackTrace();
         }

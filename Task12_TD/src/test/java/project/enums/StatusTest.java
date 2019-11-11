@@ -17,10 +17,6 @@ public enum StatusTest {
         this.statusTest = statusTest;
     }
 
-//    public String getStatusTest() {
-//        return statusTest;
-//    }
-
     private static final List<StatusTest> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
 
     public static String getStatusTest(int numberStatus) {
