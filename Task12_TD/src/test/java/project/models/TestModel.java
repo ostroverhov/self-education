@@ -1,5 +1,6 @@
 package project.models;
 
+import aquality.selenium.logger.Logger;
 import project.enums.StatusTest;
 
 import java.text.ParseException;
@@ -18,6 +19,7 @@ public class TestModel {
     private String browser;
     private String env;
     private static final String patternDateTime = "yyyy-MM-dd hh:mm:ss";
+    private static final Logger logger = Logger.getInstance();
 
     public String getName() {
         return name;
@@ -55,6 +57,7 @@ public class TestModel {
         Date date = null;
         try {
             date = new SimpleDateFormat(patternDateTime).parse(getStartTime());
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
