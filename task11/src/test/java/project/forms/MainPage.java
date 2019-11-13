@@ -1,10 +1,8 @@
 package project.forms;
 
-import aquality.selenium.elements.ElementType;
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ITextBox;
 import aquality.selenium.forms.Form;
-import framework.utils.IframeUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -15,24 +13,16 @@ public class MainPage extends Form {
     }
 
     private final String textBoxLocator = "//body[@id='tinymce']//p";
-    private final ITextBox textBox = getElementFactory().getTextBox(By.xpath(textBoxLocator), "text books");
+    private final ITextBox textBox = getElementFactory().getTextBox(By.xpath(textBoxLocator), "text box");
     private final IButton buttonBoldText = getElementFactory().getButton(By.xpath("//div[@id='mceu_3']//button"), "button bold text");
-    private final By boldTextLocator = By.xpath(textBoxLocator + "//strong");
-
-    public void switchToFrame(String nameFrame) {
-        IframeUtils.switchToFrame(nameFrame);
-    }
-
-    public void switchToMainPage() {
-        IframeUtils.switchToMainPage();
-    }
+    private final ITextBox textBoxWithBoldText = getElementFactory().getTextBox(By.xpath(textBoxLocator + "//strong"), "bold text box");
 
     public void deleteAndInputText(String text) {
         textBox.clearAndType(text);
     }
 
-    public String IsPresentText() {
-        return textBox.getElement().getText();
+    public String getTextFromTextBox() {
+        return textBox.getText();
     }
 
     public void selectText() {
@@ -44,6 +34,6 @@ public class MainPage extends Form {
     }
 
     public boolean isStrongTextInBox() {
-        return textBox.findChildElement(boldTextLocator, ElementType.TEXTBOX).getLocator().toString().contains("strong");
+        return textBoxWithBoldText.state().isDisplayed();
     }
 }

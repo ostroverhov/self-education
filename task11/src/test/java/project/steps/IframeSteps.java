@@ -1,5 +1,6 @@
 package project.steps;
 
+import framework.utils.IframeUtils;
 import framework.utils.RandomUtils;
 import org.testng.Assert;
 import project.forms.MainPage;
@@ -14,17 +15,21 @@ public class IframeSteps {
     }
 
     public static void deleteAndInputText(MainPage mainPage) {
-        mainPage.switchToFrame(nameFrame);
+        switchToFrame(nameFrame);
         String randomText = RandomUtils.generateRandomString(lengthRandomString);
         mainPage.deleteAndInputText(randomText);
-        Assert.assertEquals(randomText, mainPage.IsPresentText(), "text not equals");
+        Assert.assertEquals(randomText, mainPage.getTextFromTextBox(), "Text not equals");
     }
 
     public static void makeTextBold(MainPage mainPage) {
         mainPage.selectText();
-        mainPage.switchToMainPage();
+        IframeUtils.switchToMainPage();
         mainPage.clickButtonBoldText();
-        mainPage.switchToFrame(nameFrame);
+        switchToFrame(nameFrame);
         Assert.assertTrue(mainPage.isStrongTextInBox(), "String not bold");
+    }
+
+    private static void switchToFrame(String nameFrame) {
+        IframeUtils.switchToFrame(nameFrame);
     }
 }
