@@ -40,7 +40,6 @@ public class ApiUtils {
             responseFromApi.setBody(responseEntity);
         } catch (IOException e) {
             logger.warn("Request can't be execute");
-//            throw new IOException("Request can't be execute");
         }
         return responseFromApi;
     }

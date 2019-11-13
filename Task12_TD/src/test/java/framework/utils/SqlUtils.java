@@ -2,6 +2,7 @@ package framework.utils;
 
 import aquality.selenium.logger.Logger;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -19,7 +20,9 @@ public class SqlUtils {
     public static void executeQuery(String sqlQuery) {
         logger.info("execute query to database");
         try {
-            DriverManager.getConnection(getUrlDataBase(), login, password).prepareStatement(sqlQuery).executeUpdate();
+            Connection connection = DriverManager.getConnection(getUrlDataBase(), login, password);
+            connection.prepareStatement(sqlQuery).executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             logger.warn("Can't execute query");
         }
