@@ -3,6 +3,8 @@ package framework.browser;
 import framework.utils.MyLogger;
 import framework.utils.Reader;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -55,5 +57,9 @@ public class BrowserFactory {
     public static void setUrl(String url) {
         MyLogger.info("set URL " + url);
         driver.get(url);
+    }
+
+    public static byte[] makeScreenShot(){
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }

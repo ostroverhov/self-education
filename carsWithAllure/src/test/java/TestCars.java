@@ -5,6 +5,9 @@ import app.models.Car;
 import app.pages.*;
 import framework.browser.BrowserFactory;
 import framework.utils.MyLogger;
+import io.qameta.allure.Description;
+import io.qameta.allure.Link;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,7 +17,9 @@ import static app.form.MenuHeaderItem.RESEARCH;
 public class TestCars extends BaseTest {
     private static final int iterationForSelectionCar = 3;
 
-    @Test
+    @Test(description = "Test cars.com")
+    @Description("Test cars.com")
+    @Link("https://www.cars.com/")
     public void testCars() {
         MyLogger.step("Open and check main page");
         MainPage mainPage = new MainPage();
@@ -66,6 +71,7 @@ public class TestCars extends BaseTest {
         assertCarParameters(comparePanel.getTextFromPanelSecondCarTransmission(), secondCar.getTransmission(), "trans second car");
     }
 
+    @Step("Add car for search")
     private Car addCar() {
         MainPage mainPage = new MainPage();
         MyLogger.step("Go to research page");
@@ -99,14 +105,17 @@ public class TestCars extends BaseTest {
         return car;
     }
 
+    @Step("Check car parameters")
     private void assertCarParameters(String carParameterFromPage, String carParameter, String nameCarParameter) {
         Assert.assertTrue(carParameterFromPage.contains(carParameter), nameCarParameter + " not match");
     }
 
+    @Step("Check page {page.namePage}")
     private void assertPage(BasePage page) {
         Assert.assertTrue(page.isPage(), page.getNamePage() + " not found");
     }
 
+    @Step("Check make, model, year of car")
     private void assertMakeModelYear(String textPanel, Car car) {
         assertCarParameters(textPanel, car.getMake(), "make");
         assertCarParameters(textPanel, car.getModel(), "model");

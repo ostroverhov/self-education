@@ -1,6 +1,7 @@
 import framework.browser.BrowserFactory;
 import framework.utils.MyLogger;
 import framework.utils.Reader;
+import io.qameta.allure.Attachment;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -18,6 +19,12 @@ public class BaseTest {
     @AfterMethod
     public void tearDown() {
         MyLogger.step("Finish test");
+        makeScreenshot();
         BrowserFactory.closeBrowser();
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    private byte[] makeScreenshot() {
+        return BrowserFactory.makeScreenShot();
     }
 }
