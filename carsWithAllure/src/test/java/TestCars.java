@@ -13,13 +13,13 @@ import org.testng.annotations.Test;
 
 import static app.form.MenuHeaderItem.RESEARCH;
 
-
 public class TestCars extends BaseTest {
     private static final int iterationForSelectionCar = 3;
+    private static final String url = "https://www.cars.com/";
 
     @Test(description = "Test cars.com")
     @Description("Test cars.com")
-    @Link("https://www.cars.com/")
+    @Link(url)
     public void testCars() {
         MyLogger.step("Open and check main page");
         MainPage mainPage = new MainPage();
