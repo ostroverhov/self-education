@@ -1,25 +1,15 @@
 {
-  "platformName" : "android",
+  "platformName" : "Android",
   "isRemote": true,
-  "remoteConnectionUrl": "http://127.0.0.1:4723/wd/hub",
+  "remoteConnectionUrl": "http://localhost:4723/wd/hub",
   "isElementHighlightEnabled" : true,
 
   "driverSettings": {
-    "windows": {
-      "capabilities": {
-        "platformVersion": "10",
-        "platformName": "Windows",
-        "deviceName": "WindowsPC",
-        "app": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App",
-        "newCommandTimeout": "2000"
-      },
-      "options": {},
-      "startArguments": []
-    },
     "android": {
-      "applicationPath": "./src/test/resources/apps/ApiDemos-debug.apk",
+      "applicationPath": "./src/test/resources/apps/SecretCloset_v1.05_apkpure.com.apk",
       "capabilities": {
-        "deviceName": "Android Emulator"
+        "platformName": "Android",
+        "deviceName": "Pixel 3"
       }
     }
   },
