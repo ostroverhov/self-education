@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 public class SelectCityScreen extends AndroidScreen {
 
     private final IButton btnOkOnAlert = getElementFactory().getButton(By.id("android:id/button1"), "Button Ok on alert label");
-    private final ILabel firstAvailableCity = getElementFactory().getLabel(By.id("tvCityItemName"), "First available city");
+    private final ILabel lblFirstAvailableCity = getElementFactory().getLabel(By.id("tvCityItemName"), "Label first available city");
 
     public SelectCityScreen() {
         super(By.id("action_bar_root"), "Select city screen");
@@ -19,10 +19,10 @@ public class SelectCityScreen extends AndroidScreen {
     }
 
     public void selectFirstAvailableCity(){
-        firstAvailableCity.click();
+        lblFirstAvailableCity.click();
     }
 
     public String getNameFirstAvailableCity(){
-        return firstAvailableCity.getText();
+        return lblFirstAvailableCity.getText();
     }
 }

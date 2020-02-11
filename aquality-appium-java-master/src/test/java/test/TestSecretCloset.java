@@ -1,33 +1,25 @@
 package test;
 
 import base.BaseTest;
-import models.ModelProduct;
-import models.ModelSeller;
+import models.Product;
+import models.Seller;
 import org.testng.annotations.Test;
-import screens.MainMenuScreen;
-import screens.ProductScreen;
-import screens.SelectCityScreen;
-import screens.SellerScreen;
-import steps.Steps;
+import steps.*;
 
 public class TestSecretCloset extends BaseTest {
 
     @Test()
     public void testSecretCloset() {
-        MainMenuScreen mainMenuScreen = new MainMenuScreen();
-        Steps.clickBtnSelectCity(mainMenuScreen);
-        SelectCityScreen selectCityScreen = new SelectCityScreen();
-        Steps.clickBtnOkOnAlertLabel(selectCityScreen);
-        String firstAvailableCity = Steps.getNameFirstAvailableCity(selectCityScreen);
-        Steps.selectFirstAvailableCity(selectCityScreen);
-        Steps.checkSelectCity(mainMenuScreen, firstAvailableCity);
-        ModelProduct firstProductWithDiscount = Steps.getFirstProductWithDiscount(mainMenuScreen);
-        Steps.clickFirstProductWithDiscount(mainMenuScreen);
-        ProductScreen productScreen = new ProductScreen();
-        Steps.checkProductPricesAndDiscount(productScreen, firstProductWithDiscount);
-        ModelSeller sellerFromProductScreen = Steps.getSellerFromProductScreen(productScreen);
-        Steps.clickNameSeller(productScreen);
-        SellerScreen sellerScreen = new SellerScreen();
-        Steps.checkSeller(sellerScreen, sellerFromProductScreen);
+        MainMenuScreenSteps.clickBtnSelectCity();
+        SelectCityScreenSteps.clickBtnOkOnAlertLabel();
+        String firstAvailableCity = SelectCityScreenSteps.getNameFirstAvailableCity();
+        SelectCityScreenSteps.selectFirstAvailableCity();
+        MainMenuScreenSteps.checkSelectCity(firstAvailableCity);
+        Product firstProductWithDiscount = MainMenuScreenSteps.getFirstProductWithDiscount();
+        MainMenuScreenSteps.clickFirstProductWithDiscount();
+        ProductScreenSteps.checkProductPricesAndDiscount(firstProductWithDiscount);
+        Seller sellerFromProductScreen = ProductScreenSteps.getSellerFromProductScreen();
+        ProductScreenSteps.clickNameSeller();
+        SellerScreenSteps.checkSeller(sellerFromProductScreen);
     }
 }

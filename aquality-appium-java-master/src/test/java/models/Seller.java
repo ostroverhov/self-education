@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-public class ModelSeller {
+public class Seller {
 
     private String name;
     private String city;
@@ -27,7 +27,7 @@ public class ModelSeller {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ModelSeller that = (ModelSeller) o;
+        Seller that = (Seller) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(city, that.city);
     }

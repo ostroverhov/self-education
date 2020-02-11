@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-public class ModelProduct {
+public class Product {
 
     private String price;
     private String discount;
@@ -45,7 +45,7 @@ public class ModelProduct {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ModelProduct that = (ModelProduct) o;
+        Product that = (Product) o;
         return Objects.equals(price, that.price) &&
                 Objects.equals(discount, that.discount) &&
                 Objects.equals(oldPrice, that.oldPrice) &&

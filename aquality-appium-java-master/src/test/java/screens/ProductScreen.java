@@ -2,40 +2,40 @@ package screens;
 
 import aquality.appium.elements.interfaces.ILabel;
 import aquality.appium.screens.AndroidScreen;
-import models.ModelProduct;
-import models.ModelSeller;
+import models.Product;
+import models.Seller;
 import org.openqa.selenium.By;
 
 public class ProductScreen extends AndroidScreen {
 
-    private final ILabel nameSeller = getElementFactory().getLabel(By.id("tvItemSellerName"), "Button name seller");
-    private final ILabel citySeller = getElementFactory().getLabel(By.id("tvItemSellerCity"), "City of seller");
-    private final ILabel priceProduct = getElementFactory().getLabel(By.id("tvItemPrice"), "Price product");
-    private final ILabel discountProduct = getElementFactory().getLabel(By.id("tvItemDiscount"), "discount product");
-    private final ILabel oldPriceProduct = getElementFactory().getLabel(By.id("tvItemOriginalPrice"), "Old price product");
-    private final ILabel brandProduct = getElementFactory().getLabel(By.id("tvItemBrand"), "Brand product");
+    private final ILabel lblNameSeller = getElementFactory().getLabel(By.id("tvItemSellerName"), "Label name seller");
+    private final ILabel lblCitySeller = getElementFactory().getLabel(By.id("tvItemSellerCity"), "Label city of seller");
+    private final ILabel lblPriceProduct = getElementFactory().getLabel(By.id("tvItemPrice"), "Label price product");
+    private final ILabel lblDiscountProduct = getElementFactory().getLabel(By.id("tvItemDiscount"), "Label discount product");
+    private final ILabel lblOldPriceProduct = getElementFactory().getLabel(By.id("tvItemOriginalPrice"), "Label old price product");
+    private final ILabel lblBrandProduct = getElementFactory().getLabel(By.id("tvItemBrand"), "Label brand product");
 
     public ProductScreen() {
-        super(By.id("drawer_layout"), "Product screen");
+        super(By.id("rlBasicInfo"), "Product screen");
     }
 
     public void clickBtnNameSeller() {
-        nameSeller.click();
+        lblNameSeller.click();
     }
 
-    public ModelProduct getProduct() {
-        ModelProduct modelProduct = new ModelProduct();
-        modelProduct.setPrice(priceProduct.getText());
-        modelProduct.setDiscount(discountProduct.getText());
-        modelProduct.setOldPrice(oldPriceProduct.getText());
-        modelProduct.setBrand(brandProduct.getText());
-        return modelProduct;
+    public Product getProduct() {
+        Product product = new Product();
+        product.setPrice(lblPriceProduct.getText());
+        product.setDiscount(lblDiscountProduct.getText());
+        product.setOldPrice(lblOldPriceProduct.getText());
+        product.setBrand(lblBrandProduct.getText());
+        return product;
     }
 
-    public ModelSeller getSeller(){
-        ModelSeller modelSeller = new ModelSeller();
-        modelSeller.setName(nameSeller.getText());
-        modelSeller.setCity(citySeller.getText());
-        return modelSeller;
+    public Seller getSeller(){
+        Seller seller = new Seller();
+        seller.setName(lblNameSeller.getText());
+        seller.setCity(lblCitySeller.getText());
+        return seller;
     }
 }
