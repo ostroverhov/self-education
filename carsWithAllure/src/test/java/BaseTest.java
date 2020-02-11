@@ -20,8 +20,8 @@ public class BaseTest {
         BrowserFactory.setMaxSizeWindow();
         BrowserFactory.setUrl(URL);
         HashMap<String, String> allureProperties = new HashMap<>();
-        allureProperties.put("Browser", Reader.getParametr("browser"));
-        allureProperties.put("Browser.Version", Reader.getParametr("browser.version"));
+        allureProperties.put("Browser", System.getProperty("browser"));
+//        allureProperties.put("Browser.Version", Reader.getParametr("browser.version"));
         AllureUtils.createEnvironmentProperties(allureProperties);
     }
 

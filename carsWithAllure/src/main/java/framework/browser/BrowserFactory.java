@@ -20,7 +20,8 @@ public class BrowserFactory {
     public static WebDriver getInstance() throws IllegalBrowserNameException {
         if (driver == null) {
             MyLogger.info("driver init");
-            switch (Reader.getParametr("browser")) {
+//            switch (Reader.getParametr("browser")) {
+            switch (System.getProperty("browser")) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver(BrowserSettings.chromeSettings());
@@ -59,7 +60,7 @@ public class BrowserFactory {
         driver.get(url);
     }
 
-    public static byte[] makeScreenShot(){
+    public static byte[] makeScreenShot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
