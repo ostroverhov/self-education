@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Properties;
 
-public class Allure {
+public class AllureUtils {
 
     public static void createEnvironmentProperties(Map<String, String> environmentProperties) {
         Properties properties = new Properties();

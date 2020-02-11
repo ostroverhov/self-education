@@ -5,6 +5,8 @@ import app.models.Car;
 import app.pages.*;
 import framework.browser.BrowserFactory;
 import framework.utils.MyLogger;
+import framework.utils.Reader;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
@@ -15,12 +17,12 @@ import static app.form.MenuHeaderItem.RESEARCH;
 
 public class TestCars extends BaseTest {
     private static final int iterationForSelectionCar = 3;
-    private static final String url = "https://www.cars.com/";
 
     @Test(description = "Test cars.com")
     @Description("Test cars.com")
-    @Link(url)
+    @Link()
     public void testCars() {
+        Allure.link(Reader.getParametr("URL"));
         MyLogger.step("Open and check main page");
         MainPage mainPage = new MainPage();
         assertPage(mainPage);

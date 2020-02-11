@@ -1,9 +1,10 @@
 import framework.browser.BrowserFactory;
-import framework.utils.Allure;
+import framework.utils.AllureUtils;
 import framework.utils.MyLogger;
 import framework.utils.Reader;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.model.Link;
+import io.qameta.allure.Link;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -21,7 +22,7 @@ public class BaseTest {
         HashMap<String, String> allureProperties = new HashMap<>();
         allureProperties.put("Browser", Reader.getParametr("browser"));
         allureProperties.put("Browser.Version", Reader.getParametr("browser.version"));
-        Allure.createEnvironmentProperties(allureProperties);
+        AllureUtils.createEnvironmentProperties(allureProperties);
     }
 
     @AfterMethod
@@ -29,6 +30,11 @@ public class BaseTest {
         MyLogger.step("Finish test");
         makeScreenshot();
         BrowserFactory.closeBrowser();
+    }
+
+    @Link
+    private void addLink(){
+        Allure.link(Reader.getParametr("URL"));
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")
