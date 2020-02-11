@@ -21,7 +21,6 @@ public class BaseTest {
         BrowserFactory.setUrl(URL);
         HashMap<String, String> allureProperties = new HashMap<>();
         allureProperties.put("Browser", System.getProperty("browser"));
-//        allureProperties.put("Browser.Version", Reader.getParametr("browser.version"));
         AllureUtils.createEnvironmentProperties(allureProperties);
     }
 

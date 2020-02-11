@@ -1,7 +1,6 @@
 package framework.browser;
 
 import framework.utils.MyLogger;
-import framework.utils.Reader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,7 +19,6 @@ public class BrowserFactory {
     public static WebDriver getInstance() throws IllegalBrowserNameException {
         if (driver == null) {
             MyLogger.info("driver init");
-//            switch (Reader.getParametr("browser")) {
             switch (System.getProperty("browser")) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
