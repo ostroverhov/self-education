@@ -1,6 +1,7 @@
 package steps;
 
 import aquality.selenium.logger.Logger;
+import enums.CityItem;
 import screens.SelectCityScreen;
 
 public class SelectCityScreenSteps {
@@ -18,8 +19,8 @@ public class SelectCityScreenSteps {
         return selectCityScreen.getNameFirstAvailableCity();
     }
 
-    public static void selectFirstAvailableCity() {
-        logger.info("Select first available city");
-        selectCityScreen.selectFirstAvailableCity();
+    public static void selectCityByName(CityItem cityItem) {
+        logger.info("Select city by name");
+        selectCityScreen.inputNameCity(cityItem);
     }
 }

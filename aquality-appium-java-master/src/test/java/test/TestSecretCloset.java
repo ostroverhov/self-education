@@ -4,7 +4,12 @@ import base.BaseTest;
 import models.Product;
 import models.Seller;
 import org.testng.annotations.Test;
-import steps.*;
+import steps.MainMenuScreenSteps;
+import steps.ProductScreenSteps;
+import steps.SelectCityScreenSteps;
+import steps.SellerScreenSteps;
+
+import static enums.CityItem.ABUDHABI;
 
 public class TestSecretCloset extends BaseTest {
 
@@ -13,7 +18,7 @@ public class TestSecretCloset extends BaseTest {
         MainMenuScreenSteps.clickBtnSelectCity();
         SelectCityScreenSteps.clickBtnOkOnAlertLabel();
         String firstAvailableCity = SelectCityScreenSteps.getNameFirstAvailableCity();
-        SelectCityScreenSteps.selectFirstAvailableCity();
+        SelectCityScreenSteps.selectCityByName(ABUDHABI);
         MainMenuScreenSteps.checkSelectCity(firstAvailableCity);
         Product firstProductWithDiscount = MainMenuScreenSteps.getFirstProductWithDiscount();
         MainMenuScreenSteps.clickFirstProductWithDiscount();
