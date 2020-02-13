@@ -2,7 +2,10 @@ package framework.browser;
 
 import framework.utils.MyLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -11,8 +14,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
-import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
 
 public class BrowserFactory {
     private static WebDriver driver;
@@ -25,7 +26,6 @@ public class BrowserFactory {
             MyLogger.info("driver init");
             switch (System.getProperty("browser")) {
                 case "chrome":
-                    MyLogger.warn("2222");
                     if (System.getProperty("isRemote").equals("true")) {
                         driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
                     } else {
@@ -54,7 +54,6 @@ public class BrowserFactory {
         DesiredCapabilities capability = new DesiredCapabilities();
         capability.setBrowserName(browserName);
         capability.setPlatform(Platform.fromString(platformName));
-//        capability.setVersion("72.0.2");
         try {
             remoteDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
         } catch (MalformedURLException e) {
