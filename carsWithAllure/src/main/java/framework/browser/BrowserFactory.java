@@ -56,7 +56,7 @@ public class BrowserFactory {
         desiredCapabilities.setBrowserName(browserName);
         desiredCapabilities.setPlatform(Platform.fromString(platformName));
         try {
-            remoteDriver = new RemoteWebDriver(new URL("http://localhost:4444/grid/register"), desiredCapabilities);
+            remoteDriver = new RemoteWebDriver(new URL("http://172.19.1.93:4444/wd/hub"), desiredCapabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
