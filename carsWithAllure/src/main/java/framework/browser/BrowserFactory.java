@@ -1,6 +1,7 @@
 package framework.browser;
 
 import framework.utils.MyLogger;
+import framework.utils.Reader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -43,10 +44,10 @@ public class BrowserFactory {
     public static WebDriver getInstance() throws IllegalBrowserNameException {
         if (driver == null) {
             MyLogger.info("driver init");
-            switch (System.getProperty("browser")) {
+            switch (Reader.getParametr("browser")) {
                 case "chrome":
                     if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
+                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty(""));
                     } else {
                         WebDriverManager.chromedriver().setup();
                         driver = new ChromeDriver(BrowserSettings.chromeSettings());
@@ -54,7 +55,7 @@ public class BrowserFactory {
                     break;
                 case "firefox":
                     if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
+                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty(""));
                     } else {
                         WebDriverManager.firefoxdriver().setup();
                         driver = new FirefoxDriver(BrowserSettings.firefoxSettings());
