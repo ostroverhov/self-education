@@ -2,17 +2,17 @@ package framework.browser;
 
 import framework.utils.MyLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import static org.openqa.selenium.Platform.LINUX;
 
 public class BrowserFactory {
     private static WebDriver driver;
@@ -46,7 +46,7 @@ public class BrowserFactory {
             switch (System.getProperty("browser")) {
                 case "chrome":
                     if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(BrowserSettings.chromeSettings());
+                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
                     } else {
                         WebDriverManager.chromedriver().setup();
                         driver = new ChromeDriver(BrowserSettings.chromeSettings());
@@ -54,7 +54,7 @@ public class BrowserFactory {
                     break;
                 case "firefox":
                     if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(BrowserSettings.firefoxSettings());
+                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
                     } else {
                         WebDriverManager.firefoxdriver().setup();
                         driver = new FirefoxDriver(BrowserSettings.firefoxSettings());
@@ -68,10 +68,13 @@ public class BrowserFactory {
         return driver;
     }
 
-    private static RemoteWebDriver getRemoteDriver(Capabilities capabilities) {
+    private static RemoteWebDriver getRemoteDriver(String browserName, String platformName) {
         RemoteWebDriver remoteDriver = null;
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setBrowserName(browserName);
+        desiredCapabilities.setPlatform(Platform.fromString(platformName));
         try {
-            remoteDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+            remoteDriver = new RemoteWebDriver(new URL("http://localhost:4444/grid/register"), desiredCapabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
