@@ -1,6 +1,7 @@
 package framework.browser;
 
 import framework.utils.MyLogger;
+import framework.utils.Reader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -24,38 +25,34 @@ public class BrowserFactory {
     public static WebDriver getInstance() throws IllegalBrowserNameException {
         if (driver == null) {
             MyLogger.info("driver init");
-            switch (System.getProperty("browser")) {
-                case "chrome":
-                    if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
-                    } else {
+            if (System.getProperty("isRemote").equals("true")) {
+                driver = getRemoteDriver();
+            } else {
+                switch (System.getProperty("browser")) {
+                    case "chrome":
                         WebDriverManager.chromedriver().setup();
                         driver = new ChromeDriver(BrowserSettings.chromeSettings());
-                    }
-                    break;
-                case "firefox":
-                    if (System.getProperty("isRemote").equals("true")) {
-                        driver = getRemoteDriver(System.getProperty("browser"), System.getProperty("platform"));
-                    } else {
+                        break;
+                    case "firefox":
                         WebDriverManager.firefoxdriver().setup();
                         driver = new FirefoxDriver(BrowserSettings.firefoxSettings());
-                    }
-                    break;
-                default:
-                    MyLogger.warn("browser wasn't select ");
-                    throw new IllegalBrowserNameException();
+                        break;
+                    default:
+                        MyLogger.warn("browser wasn't select ");
+                        throw new IllegalBrowserNameException();
+                }
             }
         }
         return driver;
     }
 
-    private static RemoteWebDriver getRemoteDriver(String browserName, String platformName) {
+    private static RemoteWebDriver getRemoteDriver() {
         RemoteWebDriver remoteDriver = null;
         DesiredCapabilities capability = new DesiredCapabilities();
-        capability.setBrowserName(browserName);
-        capability.setPlatform(Platform.fromString(platformName));
+        capability.setBrowserName(System.getProperty("browser"));
+        capability.setPlatform(Platform.fromString(System.getProperty("platform")));
         try {
-            remoteDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
+            remoteDriver = new RemoteWebDriver(new URL(Reader.getParametr("gridUrl")), capability);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
