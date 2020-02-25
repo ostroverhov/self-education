@@ -3,7 +3,6 @@ package project.projectutils;
 import aquality.selenium.elements.interfaces.IElement;
 import aquality.selenium.logger.Logger;
 import org.openqa.selenium.By;
-import project.models.TestModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,24 +12,6 @@ import static aquality.selenium.elements.ElementType.LABEL;
 public class WebsiteUtils {
 
     private static final Logger logger = Logger.getInstance();
-
-    public static ArrayList<TestModel> getTestsFromTable(List<IElement> elements) {
-        logger.info("Get tests from page");
-        ArrayList<TestModel> tests = new ArrayList<>();
-        for (int i = 1; i < elements.size(); i++) {
-            TestModel testModel = new TestModel();
-            testModel.setName(textFromChildElement(elements, i, "//td[1]"));
-            testModel.setMethod(textFromChildElement(elements, i, "//td[2]"));
-            testModel.setStatus(textFromChildElement(elements, i, "//td[3]"));
-            testModel.setStartTime(textFromChildElement(elements, i, "//td[4]"));
-            testModel.setEndTime(textFromChildElement(elements, i, "//td[5]"));
-            testModel.setDuration(textFromChildElement(elements, i, "//td[6]"));
-            if (!testModel.getEndTime().isEmpty()) {
-                tests.add(testModel);
-            }
-        }
-        return tests;
-    }
 
     public static ArrayList<String> getNameTests(List<IElement> elements) {
         logger.info("Get names of tests");

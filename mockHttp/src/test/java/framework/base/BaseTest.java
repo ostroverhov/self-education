@@ -3,24 +3,18 @@ package framework.base;
 import aquality.selenium.browser.Browser;
 import aquality.selenium.browser.BrowserManager;
 import aquality.selenium.logger.Logger;
-import framework.configurations.Configuration;
-import framework.enums.TestStatus;
-import framework.utils.ScreenShotUtils;
-import framework.utils.TestRailApi;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.WebDriverException;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.internal.TestResult;
 
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseTest {
 
     protected final Logger logger = Logger.getInstance();
-    private static final String resultScreenshotName = "resultScreenshot.png";
 
     /**
      * To override.
@@ -35,8 +29,6 @@ public abstract class BaseTest {
     @BeforeMethod
     public void before() throws WebDriverException {
         logger.info("=== PRECONDITIONS ===");
-        getBrowser().goTo(Configuration.getCurrentEnvironment().getStartUrl());
-        getBrowser().setWindowSize(1920, 1080);
     }
 
     /**
@@ -44,19 +36,8 @@ public abstract class BaseTest {
      */
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestContext testContext, ITestResult testResult) {
-        TestStatus testStatus;
-        if (testResult.getStatus() == TestResult.SUCCESS) {
-            testStatus = TestStatus.PASSED;
-        } else {
-            testStatus = TestStatus.FAILED;
-        }
-        makeScreenshot();
-
-        ScreenShotUtils.makeScreenshot(getBrowser().getDriver(), resultScreenshotName);
-        TestRailApi.setResult(testResult, ScreenShotUtils.uploadImage(resultScreenshotName).getUrl());
-        logger.info("=== TEST '%1$s' '%2$s' ===", testContext.getName(), testStatus.toString(),
+        logger.info("=== TEST '%1$s' '%2$s' ===", testContext.getName(),
                 formatDuration(testResult.getEndMillis() - testResult.getStartMillis()));
-        getBrowser().quit();
     }
 
     private String formatDuration(long milliseconds) {

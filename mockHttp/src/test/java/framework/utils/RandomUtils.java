@@ -13,9 +13,4 @@ public class RandomUtils {
         logger.info("Generate random string");
         return RandomStringUtils.randomAlphabetic(lengthRandomString);
     }
-
-    public static int randomInRange(int min, int max) {
-        logger.info("Generate random number");
-        return new Random().ints(min, max).findFirst().getAsInt();
-    }
 }

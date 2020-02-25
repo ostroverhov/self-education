@@ -2,10 +2,8 @@ package framework.utils;
 
 import aquality.selenium.logger.Logger;
 import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -20,20 +18,32 @@ public class ApiUtils {
     private static final Logger logger = Logger.getInstance();
     private static final String patternStatusCode = "HTTP\\/1\\.1 ([\\d]{3}) ";
 
-    public static ResponseFromApi sendGet(String stringRequest) throws Throwable {
+    public static ResponseFromApi sendGet(String stringRequest) {
         logger.info("Send get request " + stringRequest);
         HttpGet request = new HttpGet(stringRequest);
         return executeRequest(request);
     }
 
-    public static ResponseFromApi sendPost(String stringRequest, String jsonString) throws Throwable {
+    public static ResponseFromApi sendPut(String stringRequest) {
+        logger.info("Send put request " + stringRequest);
+        HttpPut request = new HttpPut(stringRequest);
+        return executeRequest(request);
+    }
+
+    public static ResponseFromApi sendDelete(String stringRequest) {
+        logger.info("Send delete request " + stringRequest);
+        HttpDelete request = new HttpDelete(stringRequest);
+        return executeRequest(request);
+    }
+
+    public static ResponseFromApi sendPost(String stringRequest, String jsonString) {
         logger.info("Send post request " + stringRequest);
         HttpPost post = new HttpPost(stringRequest);
         post.setEntity(new StringEntity(jsonString, APPLICATION_JSON));
         return executeRequest(post);
     }
 
-    private static ResponseFromApi executeRequest(HttpRequestBase httpRequestBase) throws Throwable {
+    private static ResponseFromApi executeRequest(HttpRequestBase httpRequestBase)  {
         logger.info("Get response from request");
         ResponseFromApi responseFromApi = new ResponseFromApi();
         try (CloseableHttpResponse response = HttpClients.createDefault().execute(httpRequestBase)) {
@@ -44,7 +54,11 @@ public class ApiUtils {
             logger.info("Get response entity " + responseEntity);
             responseFromApi.setBody(responseEntity);
         } catch (IOException e) {
-            throw new IOException("Request can't be execute");
+            try {
+                throw new IOException("Request can't be execute");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return responseFromApi;
     }
