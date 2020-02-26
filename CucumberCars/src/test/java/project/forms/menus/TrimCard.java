@@ -30,6 +30,6 @@ public class TrimCard extends Form {
     }
 
     public String getNameTrim() {
-        return RegExpUtils.getPartFromString(patternGetNameTrim, nameTrimLabel.getText());
+        return RegExpUtils.getPartFromString(patternGetNameTrim, nameTrimLabel.getText(), 1);
     }
 }

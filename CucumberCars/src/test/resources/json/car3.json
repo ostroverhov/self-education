@@ -1,10 +1,1 @@
-{
-  "make": "Alfa Romeo",
-  "model": "Giulia",
-  "year": "2019",
-  "trim": {
-    "nameTrim": "Base",
-    "engine": "280-hp, 2.0-liter I-4 (premium)",
-    "transmission": "8-speed automatic w/OD and auto-manual"
-  }
-}
+{"make":"Alfa Romeo","model":"Giulia","year":"2019","trim":{"nameTrim":"Base","engine":"280-hp, 2.0-liter I-4 (premium)","transmission":"8-speed automatic w/OD and auto-manual"}}

@@ -1,5 +1,7 @@
 package project.models;
 
+import java.util.Objects;
+
 public class Trim {
 
     private String nameTrim;
@@ -18,15 +20,31 @@ public class Trim {
         return engine;
     }
 
-    public void setEngine(String engine) {
+    public Trim setEngine(String engine) {
         this.engine = engine;
+        return this;
     }
 
     public String getTransmission() {
         return transmission;
     }
 
-    public void setTransmission(String transmission) {
+    public Trim setTransmission(String transmission) {
         this.transmission = transmission;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trim trim = (Trim) o;
+        return Objects.equals(engine, trim.engine) &&
+                Objects.equals(transmission, trim.transmission);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(engine, transmission);
     }
 }

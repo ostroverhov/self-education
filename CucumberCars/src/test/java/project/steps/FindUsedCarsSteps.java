@@ -44,7 +44,9 @@ public class FindUsedCarsSteps {
     public void searchUsedCar(String nameCar) {
         Car car = CarStore.getCarFromStorage(nameCar);
         filterForm.selectYear(car.getYear());
+        filterForm.waitInvisibilityFilterOverlay();
         filterForm.clickCheckBoxTrim(car.getTrim().getNameTrim());
+        filterForm.waitInvisibilityFilterOverlay();
     }
 
     @And("^Price used car lower then price new car$")

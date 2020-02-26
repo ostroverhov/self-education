@@ -9,8 +9,8 @@ public class Configuration {
 
     public static synchronized Environment getCurrentEnvironment() {
         if (currentEnvironment == null)
-            currentEnvironment = Environment.valueOf((System.getProperty("environment") != null ? System.getProperty("environment")
-                    : "stage").toUpperCase());
+            currentEnvironment = new Environment(System.getProperty("environment") != null ? System.getProperty("environment")
+                    : "stage");
         return currentEnvironment;
     }
 

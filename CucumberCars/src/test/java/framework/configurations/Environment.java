@@ -2,9 +2,7 @@ package framework.configurations;
 
 import aquality.selenium.utils.JsonFile;
 
-public enum Environment {
-    PROD("prod"),
-    STAGE("stage");
+public class Environment {
 
     private JsonFile configurationFile;
 

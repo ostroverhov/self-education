@@ -2,40 +2,40 @@ Feature: Second test
 
   Scenario Outline: Compare characteristics of two cars with price
 
-    Given Open page 'MAINPAGE'
+    Given Check the page 'MAINPAGE' opening
     When I click button 'RESEARCH' from main page
-    Then Open page 'RESEARCHPAGE'
+    Then Check the page 'RESEARCHPAGE' opening
 
     When Search '<firstCarModel>'
     Then '<firstCarModel>' is found
 
     When Click “Compare trims” link
-    Then Open page 'COMPARETRIM'
+    Then Check the page 'COMPARETRIM' opening
     And Trim for selected '<firstCarModel>'
     And Save other parameters for '<firstCarModel>' into json
 
     When I open main page
-    Then Open page 'MAINPAGE'
+    Then Check the page 'MAINPAGE' opening
 
     When I click button 'RESEARCH' from main page
-    Then Open page 'RESEARCHPAGE'
+    Then Check the page 'RESEARCHPAGE' opening
 
     When Search '<secondCarModel>'
     Then '<secondCarModel>' is found
 
     When Click “Compare trims” link
-    Then Open page 'COMPARETRIM'
+    Then Check the page 'COMPARETRIM' opening
     And Trim for selected '<secondCarModel>'
     And Save other parameters for '<secondCarModel>' into json
 
     When I click button 'RESEARCH'
-    Then Open page 'RESEARCHPAGE'
+    Then Check the page 'RESEARCHPAGE' opening
 
     When Click button 'Side-by-side Comparisons'
-    Then Open page 'COMPARECARS'
+    Then Check the page 'COMPARECARS' opening
 
     When I select '<firstCarModel>' and click button 'Start compare'
-    Then Open page 'MODELCOMPAREPAGE'
+    Then Check the page 'MODELCOMPAREPAGE' opening
     And Page with selected '<firstCarModel>'
 
     When Click button 'Add another car' and select '<secondCarModel>'
@@ -47,7 +47,7 @@ Feature: Second test
     And Price are save
 
     When I open main page
-    Then Open page 'MAINPAGE'
+    Then Check the page 'MAINPAGE' opening
 
     When I search '<firstCarModel>' in 'Used Cars' with 'No Max Price' radius '20 Miles from' zip code '10001'
     Then Found at least one result

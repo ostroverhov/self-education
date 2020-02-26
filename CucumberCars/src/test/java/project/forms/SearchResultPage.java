@@ -20,7 +20,7 @@ public class SearchResultPage extends Form {
     }
 
     public boolean isDisplayedLabelSearchCar() {
-        return labelSearchedCars.state().isDisplayed();
+        return labelSearchedCars.state().waitForDisplayed();
     }
 
     public String getPriceCar() {

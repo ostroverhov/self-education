@@ -9,13 +9,13 @@ public class RegExpUtils {
 
     private static final Logger logger = Logger.getInstance();
 
-    public static String getPartFromString(String stringPattern, String text) {
+    public static String getPartFromString(String stringPattern, String text, int numberPart) {
         logger.info("Get part from string");
         Pattern pattern = Pattern.compile(stringPattern);
         Matcher matcher = pattern.matcher(text);
         String str = null;
         if (matcher.find()) {
-            str = matcher.group(1);
+            str = matcher.group(numberPart);
         }
         return str;
     }

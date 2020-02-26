@@ -26,8 +26,4 @@ public class InfoSection extends Form {
     public String getTextPanelPrice() {
         return panelPrice.getText();
     }
-
-    public boolean buttonIsPresent() {
-        return buttonCompareTrim.state().isDisplayed();
-    }
 }
