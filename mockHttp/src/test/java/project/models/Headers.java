@@ -1,26 +1,24 @@
 package project.models;
 
-import java.util.Map;
-
 public class Headers {
 
-    private String contentType;
-    private Map customType;
+    private Object contentType;
+    private String location;
 
-    public Map getCustomType() {
-        return customType;
+    public String getLocation() {
+        return location;
     }
 
-    public Headers setCustomType(Map customType) {
-        this.customType = customType;
+    public Headers setLocation(String location) {
+        this.location = location;
         return this;
     }
 
-    public String getContentType() {
+    public Object getContentType() {
         return contentType;
     }
 
-    public Headers setContentType(String contentType) {
+    public Headers setContentType(Object contentType) {
         this.contentType = contentType;
         return this;
     }

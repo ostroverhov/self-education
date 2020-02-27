@@ -1,15 +1,23 @@
 package project.models;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class Request {
 
     private String method;
     private String url;
     private String urlPattern;
-    private HashMap<String, Map> queryParameters;
-    private HashMap<String, String> bodyPatterns;
+    private Object headers;
+    private List<Object> bodyPatterns;
+
+    public Object getHeaders() {
+        return headers;
+    }
+
+    public Request setHeaders(Object headers) {
+        this.headers = headers;
+        return this;
+    }
 
     public String getUrlPattern() {
         return urlPattern;
@@ -20,11 +28,11 @@ public class Request {
         return this;
     }
 
-    public HashMap<String, String> getBodyPatterns() {
+    public List<Object> getBodyPatterns() {
         return bodyPatterns;
     }
 
-    public Request setBodyPatterns(HashMap<String, String> bodyPatterns) {
+    public Request setBodyPatterns(List<Object> bodyPatterns) {
         this.bodyPatterns = bodyPatterns;
         return this;
     }
@@ -44,15 +52,6 @@ public class Request {
 
     public Request setUrl(String url) {
         this.url = url;
-        return this;
-    }
-
-    public HashMap<String, Map> getQueryParameters() {
-        return queryParameters;
-    }
-
-    public Request setQueryParameters(HashMap<String, Map> queryParameters) {
-        this.queryParameters = queryParameters;
         return this;
     }
 }

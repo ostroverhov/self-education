@@ -9,11 +9,11 @@ public class TestWireMock extends BaseTest {
     @Override
     @Test
     public void runTest() {
-        Steps.sendMappingOneAndCheck();
+        String bodyFirstResponse = Steps.sendMappingOneAndCheck();
         Steps.sendMappingTwoAndCheck();
-        Steps.sendMappingThree();
-        Steps.sendMappingFour();
-        Steps.deleteAllMappings();
+        Steps.sendMappingThreeAndCheck(bodyFirstResponse);
+        Steps.sendMappingFourAndCheck();
         Steps.getAllMappings();
+        Steps.deleteAllMappings();
     }
 }

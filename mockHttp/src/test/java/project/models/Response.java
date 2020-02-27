@@ -6,6 +6,16 @@ public class Response {
     private String body;
     private Headers headers;
     private String proxyBaseUrl;
+    private int fixedDelayMilliseconds;
+
+    public int getFixedDelayMilliseconds() {
+        return fixedDelayMilliseconds;
+    }
+
+    public Response setFixedDelayMilliseconds(int fixedDelayMilliseconds) {
+        this.fixedDelayMilliseconds = fixedDelayMilliseconds;
+        return this;
+    }
 
     public String getProxyBaseUrl() {
         return proxyBaseUrl;

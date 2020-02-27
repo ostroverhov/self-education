@@ -1,17 +1,14 @@
 package framework.utils;
 
 import aquality.selenium.logger.Logger;
-import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.*;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import project.models.ResponseFromApi;
 
 import java.io.IOException;
-
-import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+import java.io.UnsupportedEncodingException;
 
 public class ApiUtils {
 
@@ -36,10 +33,15 @@ public class ApiUtils {
         return executeRequest(request);
     }
 
-    public static ResponseFromApi sendPost(String stringRequest, String jsonString) {
+    public static ResponseFromApi sendPost(String stringRequest, String jsonString, String header) {
         logger.info("Send post request " + stringRequest);
         HttpPost post = new HttpPost(stringRequest);
-        post.setEntity(new StringEntity(jsonString, APPLICATION_JSON));
+        post.addHeader("contentType", header);
+        try {
+            post.setEntity(new StringEntity(jsonString));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return executeRequest(post);
     }
 
