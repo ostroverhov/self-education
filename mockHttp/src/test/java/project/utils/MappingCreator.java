@@ -43,7 +43,6 @@ public class MappingCreator {
                 .setResponse(new Response().setStatus(ReaderUtils.getParameter("statusOk"))
                                         .setBody(ReaderUtils.readFile(pathToFileJson))
                                         .setHeaders(new Headers().setContentType(headerMappingTwo)));
-        System.out.println(JsonUtils.convertToJson(bodyStab));
         return JsonUtils.convertToJson(bodyStab);
     }
 
@@ -57,12 +56,12 @@ public class MappingCreator {
         HashMap<String, String> customTypeHeader = new HashMap<>();
         customTypeHeader.put("equalTo", header);
         bodyStab.setRequest(new Request().setUrl(urlMappingThree)
-                        .setMethod(ReaderUtils.getParameter("methodPost"))
-                        .setHeaders(new Headers().setContentType(customTypeHeader))
-                        .setBodyPatterns(bodyPatterns))
+                                        .setMethod(ReaderUtils.getParameter("methodPost"))
+                                        .setHeaders(new Headers().setContentType(customTypeHeader))
+                                        .setBodyPatterns(bodyPatterns))
                 .setResponse(new Response().setStatus(ReaderUtils.getParameter("statusError"))
-                        .setBody(RandomUtils.generateRandomString(randomStringLengthForThirdMapping))
-                        .setHeaders(new Headers().setContentType(headerMappingOne)));
+                                        .setBody(RandomUtils.generateRandomString(randomStringLengthForThirdMapping))
+                                        .setHeaders(new Headers().setContentType(headerMappingOne)));
         return JsonUtils.convertToJson(bodyStab);
     }
 

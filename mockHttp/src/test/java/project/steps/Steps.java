@@ -6,12 +6,10 @@ import framework.utils.JsonUtils;
 import framework.utils.ReaderUtils;
 import org.testng.Assert;
 import project.models.BodyStab;
-import project.models.Response;
-import project.models.ResponseFromApi;
 import project.utils.MappingCreator;
+import project.utils.MappingUtils;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Steps {
 
@@ -29,8 +27,8 @@ public class Steps {
     public static String sendMappingOneAndCheck() {
         logger.info("Send mapping and check");
         String jsonBodyStab = MappingCreator.getFirstMapping(urlMappingOne);
-        assertResponses(ApiUtils.sendPost(createStringRequest(stringRequestToMapping), jsonBodyStab, ""),
-                ApiUtils.sendGet(createStringRequest(urlMappingOne)));
+        MappingUtils.assertResponses(ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToMapping), jsonBodyStab, ""),
+                ApiUtils.sendGet(MappingUtils.createStringRequest(urlMappingOne)));
         return JsonUtils.jsonToObject(jsonBodyStab, BodyStab.class).getResponse().getBody();
     }
 
@@ -38,59 +36,37 @@ public class Steps {
         logger.info("Send mapping with parameter and check");
         HashMap<String ,String> parameters = new HashMap<>();
         parameters.put(nameQueryParameter, queryParameter);
-        assertResponses(ApiUtils.sendPost(createStringRequest(stringRequestToMapping), MappingCreator.getSecondMapping(urlMappingTwo), ""),
-                ApiUtils.sendGet(createStringRequestWithParameters(urlMappingTwo, parameters)));
+        MappingUtils.assertResponses(ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToMapping), MappingCreator.getSecondMapping(urlMappingTwo), ""),
+                ApiUtils.sendGet(MappingUtils.createStringRequestWithParameters(urlMappingTwo, parameters)));
     }
 
     public static void sendMappingThreeAndCheck(String bodyFirstMapping) {
         logger.info("Send mapping with parameters body and headers");
-        assertResponses(ApiUtils.sendPost(createStringRequest(stringRequestToMapping), MappingCreator.getThirdMapping(urlMappingThree, bodyFirstMapping, headerForThirdRequest), ""),
-                ApiUtils.sendPost(createStringRequest(urlMappingThree), bodyFirstMapping, headerForThirdRequest));
-        Assert.assertEquals(ApiUtils.sendPost(createStringRequest(urlMappingThree), "", headerForThirdRequest).getStatusCode(),
+        MappingUtils.assertResponses(ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToMapping), MappingCreator.getThirdMapping(urlMappingThree, bodyFirstMapping, headerForThirdRequest), ""),
+                ApiUtils.sendPost(MappingUtils.createStringRequest(urlMappingThree), bodyFirstMapping, headerForThirdRequest));
+        Assert.assertEquals(ApiUtils.sendPost(MappingUtils.createStringRequest(urlMappingThree), "", headerForThirdRequest).getStatusCode(),
                 ReaderUtils.getParameter("statusNotFound"),
                 "Check stub with wrong body");
-        Assert.assertEquals(ApiUtils.sendPost(createStringRequest(urlMappingThree), bodyFirstMapping, "").getStatusCode(),
+        Assert.assertEquals(ApiUtils.sendPost(MappingUtils.createStringRequest(urlMappingThree), bodyFirstMapping, "").getStatusCode(),
                 ReaderUtils.getParameter("statusNotFound"),
                 "Check stub with wrong header");
     }
 
     public static void sendMappingFourAndCheck() {
         logger.info("Send mapping with redirect");
-        ApiUtils.sendPost(createStringRequest(stringRequestToMapping), MappingCreator.getFourMapping(urlMappingFour, urlMappingOne), "");
-        Assert.assertEquals(ApiUtils.sendGet(createStringRequest(urlMappingFour)),
-                ApiUtils.sendGet(createStringRequest(urlMappingOne)),
+        ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToMapping), MappingCreator.getFourMapping(urlMappingFour, urlMappingOne), "");
+        Assert.assertEquals(ApiUtils.sendGet(MappingUtils.createStringRequest(urlMappingFour)),
+                ApiUtils.sendGet(MappingUtils.createStringRequest(urlMappingOne)),
                 "Check redirect stumb");
     }
 
     public static void deleteAllMappings() {
         logger.info("Delete all mappings");
-        ApiUtils.sendDelete(createStringRequest(stringRequestToMapping));
+        ApiUtils.sendDelete(MappingUtils.createStringRequest(stringRequestToMapping));
     }
 
     public static void getAllMappings(){
         logger.info("Get all mappings");
-        ApiUtils.sendPost(createStringRequest(stringRequestToRecord), "{}", "");
-    }
-
-    private static String createStringRequest(String request) {
-        logger.info("Create string request");
-        return String.format(ReaderUtils.getParameter("urlApi"), ReaderUtils.getParameter("port"), request);
-    }
-
-    private static String createStringRequestWithParameters(String request, HashMap<String, String> parameters){
-        logger.info("Create string request with parameters");
-        StringBuilder builder = new StringBuilder();
-        builder.append(createStringRequest(request)).append("?");
-        for (Map.Entry<String, String > entry:parameters.entrySet()) {
-            builder.append(entry.getKey()).append("=").append(entry.getValue());
-        }
-        return builder.toString();
-    }
-
-    private static void assertResponses(ResponseFromApi responseSendStub, ResponseFromApi responseCheckStub){
-        logger.info("Assert stumb");
-        Response responseFromStub = JsonUtils.jsonToObject(responseSendStub.getBody(), BodyStab.class).getResponse();
-        Assert.assertEquals(new ResponseFromApi().setBody(responseFromStub.getBody()).setStatusCode(String.valueOf(responseFromStub.getStatus())),
-                responseCheckStub, "Check stub");
+        ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToRecord), "{}", "");
     }
 }
