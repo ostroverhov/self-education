@@ -13,7 +13,7 @@ public class TestWireMock extends BaseTest {
         Steps.sendMappingTwoAndCheck();
         Steps.sendMappingThreeAndCheck(bodyFirstResponse);
         Steps.sendMappingFourAndCheck();
-        Steps.getAllMappings();
+        Steps.getAllRequests();
         Steps.deleteAllMappings();
     }
 }

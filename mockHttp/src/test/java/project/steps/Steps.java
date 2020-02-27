@@ -15,7 +15,7 @@ public class Steps {
 
     private static final Logger logger = Logger.getInstance();
     private static final String stringRequestToMapping = "/__admin/mappings";
-    private static final String stringRequestToRecord = "/__admin/recordings/snapshot";
+    private static final String stringRequestToRecord = "/__admin/requests";
     private static final String urlMappingOne = "/plaintext/mapping1/";
     private static final String urlMappingTwo = "/jsontext/mapping2/";
     private static final String nameQueryParameter = "testqueryparam";
@@ -65,8 +65,8 @@ public class Steps {
         ApiUtils.sendDelete(MappingUtils.createStringRequest(stringRequestToMapping));
     }
 
-    public static void getAllMappings(){
+    public static void getAllRequests(){
         logger.info("Get all mappings");
-        ApiUtils.sendPost(MappingUtils.createStringRequest(stringRequestToRecord), "{}", "");
+        ApiUtils.sendGet(MappingUtils.createStringRequest(stringRequestToRecord));
     }
 }
