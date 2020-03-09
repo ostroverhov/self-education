@@ -1,11 +1,10 @@
 package framework.utils
 
-import aquality.selenium.logger.Logger
 import java.io.FileInputStream
 import java.util.*
 
 private const val pathToConfig: String = "src/main/resources/config.properties"
-val logger: Logger = Logger.getInstance()
+val logger: Logger = Logger()
 
 fun getParameter(parameter: String?): String? {
     logger.info("Get $parameter  from config file")
