@@ -1,0 +1,12 @@
+{
+  "name": "flarum",
+  "version": "1.0.0",
+  "description": "test flarum",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "author": "v.ostroverhov",
+  "license": "ISC",
+  "dependencies": "cypress"
+}
