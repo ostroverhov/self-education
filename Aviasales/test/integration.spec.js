@@ -1,77 +1,41 @@
 const {describe, it} = require('mocha');
-const HomePage = require('./pages/mainPage');
+const MainPage = require('./pages/mainPage');
+const ResultPage = require('./pages/resultPage');
 const Browser = require('./../framework/browser');
 const {assert} = require('chai');
-const bikes = require('./../app/bikes.json');
+const flightModel = require('../flightModel');
 const chai = require('chai'), chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 describe('Aviasales TestSuite', () => {
     let browser;
-    let className1 = 'comfort';
-    let className2 = 'endurance';
-    let className3 = 'race';
 
-    before(async () => {
+    before(() => {
         browser = new Browser();
-        await browser.setUpDriver();
-        this.homePage = new HomePage(browser);
+        browser.setUpDriver();
+        this.mainPage = new MainPage(browser);
+        this.resultPage = new ResultPage(browser);
     });
 
-    after(async () => {
-        await browser.quit();
+    after(() => {
+        browser.quit();
     });
 
-    afterEach(async () => {
-        await browser.getScreenshot();
+    it('should check mainpage is opened', async () => {
+        assert.isTrue(await this.mainPage.isDisplayed(), 'Page is not opened');
     });
 
-    it('should check homepage is opened', async () => {
-        assert.isTrue(await this.homePage.isDisplayed(), 'Page is not opened');
+    it('should selected ticket', async () => {
+        await this.mainPage.fillSearchForm(
+            flightModel.originCity,
+            flightModel.destinationCity,
+            flightModel.departureDate,
+            flightModel.returnDate
+        );
+        assert.equal(JSON.stringify(flightModel), JSON.stringify(await this.resultPage.getSearchParameters()), 'Check flight parameters');
     });
 
-    it('should find name, image, description and class for each bike from /app/bikes.json', async () => {
-        for (let i = 0; i < bikes.items.length; i++) {
-            assert.isTrue(await this.homePage.findBike(i), `[id=${i}] Bike was not found`);
-        }
-    });
-
-    it('should sort bikes by 1 class', async () => {
-
-        await this.homePage.clickCheckBoxFilter(className1);
-        assert.isTrue(await this.homePage.isFilterSuccess(className1));
-
-        await browser.refresh();
-        assert.isTrue(await this.homePage.isFilterSuccess(className1));
-    });
-
-    it('should sort bikes by 2 classes', async () => {
-        await this.homePage.clickCheckBoxFilter(className1);
-
-        await this.homePage.clickCheckBoxFilter(className1);
-        await this.homePage.clickCheckBoxFilter(className2);
-
-        assert.isTrue(await this.homePage.isFilterSuccess(className1));
-        assert.isTrue(await this.homePage.isFilterSuccess(className2));
-    });
-
-    it('should sort bikes by 3 classes', async () => {
-        await this.homePage.clickCheckBoxFilter(className1);
-        await this.homePage.clickCheckBoxFilter(className2);
-
-        await this.homePage.clickCheckBoxFilter(className1);
-        await this.homePage.clickCheckBoxFilter(className2);
-        await this.homePage.clickCheckBoxFilter(className3);
-        assert.isTrue(await this.homePage.isFilterSuccess(className1));
-        assert.isTrue(await this.homePage.isFilterSuccess(className2));
-        assert.isTrue(await this.homePage.isFilterSuccess(className3));
-    });
-
-    it('should check a JSON object and bikes at https://jujhar.com/bikes.json', async () => {
-        chai.request('https://jujhar.com').get('/bikes.json').end((err, response) => {
-            assert.isNull(err, `There is an error: ${err}`);
-            assert.deepEqual(JSON.parse(response.text), bikes, 'JSON object is not relevant');
-        });
-        await browser.navigate('https://jujhar.com/bikes.json');
+    it('get faster flight', () => {
+        this.resultPage.getFastestFlight();
     });
 });

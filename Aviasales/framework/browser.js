@@ -3,7 +3,6 @@ require('geckodriver');
 const {Builder} = require('selenium-webdriver');
 const config = require('../config.json');
 const logger = require('./utils/log.util');
-const fs = require('fs');
 
 class Browser {
 

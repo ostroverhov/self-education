@@ -14,6 +14,13 @@ class BasePage {
             logger.warning(`${error}`);
         });
     }
+
+    async setValue(script) {
+        logger.info(`Set attribute to element ${this.name}`);
+        return await this.browser.driver.executeScript(script).catch((error) => {
+            logger.warning(`${error}`);
+        });
+    }
 }
 
 module.exports = BasePage;

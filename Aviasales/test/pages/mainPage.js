@@ -1,21 +1,30 @@
 const BasePage = require('../../framework/basePage');
 const logger = require('../../framework/utils/log.util');
 const panel = require('../elements/panel');
-const checkBox = require('../elements/checkBox');
-const Case = require('case');
+const textBox = require('../elements/textBox');
+const radioButton = require('../elements/radioButton');
+const button = require('../elements/button');
 const {By} = require('selenium-webdriver');
-const retry = require('async-retry');
-const bikes = require('../../app/bikes.json');
 const locators = {
-    pageLoc: By.xpath('//h1[contains(text(), "Bike Store")]'),
-    bikeClasses: By.xpath('//div[contains(@class, "panel-footer")]'),
-    bikeLoc: (name, img, desc, cl) => `//*[contains(text(), "${name}")][//*[contains(@src, "${img}")]][//*[contains(text(), "${desc}")]][//*[contains(text(), "${cl}")]]`,
-    filterLoc: (filter) => `//span[contains(text(), "${filter}")]/preceding-sibling::input`
+    pageLoc: By.xpath(`//div[@class='forms-resolver__forms-wrap']`),
+    originLoc: By.id('origin'),
+    destinationLoc: By.id('destination'),
+    dateDepartureLoc: By.xpath(`//div[contains(@class, "--departure")]`),
+    dateReturnLoc: By.xpath(`//div[contains(@class, "--return")]`),
+    calendarDateLoc: (date) => By.xpath(`//div[@aria-label='${date}']`),
+    dropDownPassengersAndClassLoc: By.xpath(`//div[contains(@class, "--avia")]`),
+    checkBoxClassLoc: By.xpath(`//div[contains(@class, "--avia")]`),
+    buttonSubmitLoc: By.xpath(`//span[@class='b-button__text']`),
 };
-
-function isTrue(smth) {
-    return smth === true;
-}
+const fields = {
+    originField: (browser) => new textBox(browser, `Origin field`, locators.originLoc),
+    destinationField: (browser) => new textBox(browser, `Destination field`, locators.destinationLoc),
+    dateDepartureField: (browser) => new textBox(browser, `Date departure field`, locators.dateDepartureLoc),
+    calendarDatePanel: (browser, date) => new panel(browser, `Date from calendar field`, locators.calendarDateLoc(date)),
+    dropDownPassengersAndClass: (browser) => new panel(browser, `Panel info about passengers and class`, locators.dropDownPassengersAndClassLoc),
+    radioButtonEconomyClass: (browser) => new radioButton(browser, `Panel info about passengers and class`, locators.dropDownPassengersAndClassLoc),
+    buttonSubmit: (browser) => new button(browser, `Button submit`, locators.buttonSubmitLoc)
+};
 
 class MainPage extends BasePage {
 
@@ -23,46 +32,42 @@ class MainPage extends BasePage {
         super(browser, locators.pageLoc, "Main page");
     }
 
-    async getBikePanel(name, img, desc, cl) {
-        return new panel(this.browser, name, By.xpath(locators.bikeLoc(name, img, desc, cl)));
+    async fillSearchForm(origin, destination, departureDate, returnDate) {
+        logger.info(`Fill search form ${origin}, ${destination}, ${departureDate}, ${returnDate}`);
+        await this.inputOriginCity(origin);
+        await this.inputDestinationCity(destination);
+        await this.inputDateRange(departureDate, returnDate);
+        await this.selectEconomyClass();
+        await this.clickSubmit();
     }
 
-    async getCheckBoxFilter(name) {
-        return new checkBox(this.browser, name, By.xpath(locators.filterLoc(name)));
+    async inputOriginCity(origin) {
+        logger.info(`Input origin city ${origin}`);
+        fields.originField(this.browser).cleanAndTypeText(origin);
     }
 
-    async getBikesClasses(name) {
-        return new panel(this.browser, name, locators.bikeClasses);
+    async inputDestinationCity(destination) {
+        logger.info(`Input destination ciry ${destination}`);
+        fields.destinationField(this.browser).cleanAndTypeText(destination);
     }
 
-    async findBike(i) {
-        logger.info(`Find bike id = ${i}`);
-        let results = [];
-        for (let j = 0; j < bikes.items[i].class.length; j++) {
-            results.push(await (await this.getBikePanel(bikes.items[i].name, bikes.items[i].image.thumb, bikes.items[i].description, bikes.items[i].class[j])).isDisplayedElement());
-        }
-        return results.every(isTrue);
+    async inputDateRange(departureDate, returnDate) {
+        logger.info(`input date range from ${departureDate} to ${returnDate}`);
+        await fields.dateDepartureField(this.browser).findAndClick();
+        await fields.calendarDatePanel(this.browser, departureDate).findAndClick();
+        await fields.calendarDatePanel(this.browser, returnDate).findAndClick();
     }
 
-    async clickCheckBoxFilter(className) {
-        logger.info(`Click checkBox ${className}`);
-        await retry(async () => {
-            (await this.getCheckBoxFilter(className)).findAndClick();
-        }, {
-            retries: 5,
-            minTimeout: 1,
-            maxTimeout: 3
-        });
+    async selectEconomyClass() {
+        logger.info(`Select economy class`);
+        await fields.dropDownPassengersAndClass(this.browser).findAndClick();
+        await fields.radioButtonEconomyClass(this.browser).findAndClick();
     }
 
-    async isFilterSuccess(className) {
-        logger.info(`Check is filter ${className} success`);
-        let results = [];
-        const classes =  (await this.getBikesClasses("panel")).findElementsFromPage();
-        for (let i = 0; i < classes.length; i++) {
-            results.push(Case.lower(classes[i].getText()).includes(className));
-        }
-        return results.every(isTrue);
+    async clickSubmit() {
+        logger.info(`Click button submit`);
+        await fields.buttonSubmit(this.browser).waitOfPresence();
+        await fields.buttonSubmit(this.browser).findAndClick();
     }
 }
 

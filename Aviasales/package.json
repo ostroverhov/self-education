@@ -1,8 +1,7 @@
 {
-  "name": "economist-testtask-web-javascript",
+  "name": "aviasales",
   "version": "1.0.0",
-  "description": "![on my mf bike](app/favicon.png)",
-  "main": "index.js",
+  "description": "test",
   "directories": {
     "test": "test"
   },
@@ -14,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://qa-gitlab.itransition.corp/auto_projects/economist-testtask-web-javascript.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",

@@ -1,5 +1,6 @@
 const logger = require('./utils/log.util');
 require('selenium-webdriver');
+const {until} = require('selenium-webdriver');
 
 class BaseElement {
 
@@ -43,7 +44,29 @@ class BaseElement {
 
     async getText() {
         logger.info(`Get text from element ${this.name}`);
-        return this.browser.driver.findElement(this.locator).getText().catch((error) => {
+        return await this.browser.driver.findElement(this.locator).getText().catch((error) => {
+            logger.warning(`${error}`);
+        });
+    }
+
+    async getAttributeValue() {
+        logger.info(`Set attribute to element ${this.name}`);
+        return await this.browser.driver.findElement(this.locator).getAttribute('value').catch((error) => {
+            logger.warning(`${error}`);
+        });
+    }
+
+    async waitOfPresence() {
+        logger.info(`Get text from element ${this.name}`);
+        return await this.browser.driver.wait(until.elementIsVisible(this.browser.driver.findElement(this.locator))).catch((error) => {
+            logger.warning(`${error}`);
+        });
+    }
+
+
+     async waitOfHide() {
+        logger.info(`Get text from element ${this.name}`);
+        await this.browser.driver.wait(until.elementIsNotVisible(this.browser.driver.findElement(this.locator))).catch((error) => {
             logger.warning(`${error}`);
         });
     }
