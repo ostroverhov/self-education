@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestService" verbose="3" >
+    <parameter name="responseCode200" value="200"/>
+    <test name="AddEmployee" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value=""/>
+                    <parameter name="privateId" value="d"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Данные добавлены успешно"/>
+                    <parameter name="updatedMiddleName" value="Petrovich"/>
+                    <parameter name="expectedSalary" value="840"/>
+                    <parameter name="workdays" value="21"/>
+                    <parameter name="sickDays" value="0"/>
+                    <parameter name="overDays" value="0"/>
+                    <parameter name="month" value="01-2013"/>
+                    <parameter name="isPriv" value="0"/>
+                    <include name=".*addNewEmployeeTest.*"/>
+                    <include name=".*updateCreatedEmployeeTest.*"/>
+                    <include name=".*searchEmployeeByPrivateIDTest.*"/>
+                    <include name=".*getSalaryEmployeeTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterID" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value=""/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterPrivateId" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value=""/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterFirstName" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value=""/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterLastName" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value=""/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterMiddleName" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value=""/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterExp" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value=""/>
+                    <parameter name="professionId" value="4"/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="AddEmployeeWithEmptyParameterProfessionId" >
+        <classes>
+            <class name="TestService">
+                <methods>
+                    <parameter name="id" value="1000"/>
+                    <parameter name="privateId" value="d1000"/>
+                    <parameter name="firstName" value="Ivan"/>
+                    <parameter name="lastName" value="Ivanov"/>
+                    <parameter name="middleName" value="Ivanovich"/>
+                    <parameter name="exp" value="2"/>
+                    <parameter name="professionId" value=""/>
+                    <parameter name="responseMessage" value="Указаны не все параметры"/>
+                    <include name=".*addEmployeeWithEmptyParameterTest.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
