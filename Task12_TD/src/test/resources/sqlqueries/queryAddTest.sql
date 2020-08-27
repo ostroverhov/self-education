@@ -1,0 +1,1 @@
+INSERT INTO union_reporting.test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES ('%s', %s, '%s', %s, 2, '%s', '%s', '%s', '%s', null);
